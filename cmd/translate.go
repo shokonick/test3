@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"codeberg.org/aryak/simplytranslate/utils"
 	"fmt"
+	"github.com/spf13/cobra"
 )
 
 var engine string

@@ -1,11 +1,12 @@
 package utils
 
 import (
+	"fmt"
 	"github.com/gocolly/colly"
 	"os"
-	"fmt"
 	"strings"
 )
+
 type List struct {
 	Name string
 	Id   string
@@ -26,7 +27,7 @@ func TranslateGoogle(to string, from string, query string) string {
 	return answer
 }
 func TranslateReverso(to string, from string, query string) string {
-	json := []byte(`{ "format": "text", "from": "`+from+`", "to": "`+to+`", "input":"`+query+`", "options": {"sentenceSplitter": false, "origin":"translation.web", contextResults: false, languageDetection: true} }`)
+	json := []byte(`{ "format": "text", "from": "` + from + `", "to": "` + to + `", "input":"` + query + `", "options": {"sentenceSplitter": false, "origin":"translation.web", contextResults: false, languageDetection: true} }`)
 	reversoOut := GetRequest("https://api.reverso.net/translate/v1/translation", json)
 	gjsonArr := reversoOut.Get("translation").Array()
 	answer := gjsonArr[0].String()
@@ -35,9 +36,9 @@ func TranslateReverso(to string, from string, query string) string {
 func TranslateAll(to string, from string, query string) string {
 	reverso := TranslateReverso(to, from, query)
 	google := TranslateGoogle(to, from, query)
-	fmt.Println("Google: "+google)
-	fmt.Println("Reverso: "+reverso)
-	return  "Google: "+google + "\nReverso: "+reverso
+	fmt.Println("Google: " + google)
+	fmt.Println("Reverso: " + reverso)
+	return "Google: " + google + "\nReverso: " + reverso
 }
 func LangListGoogle(listType string) []List {
 	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
@@ -51,122 +52,122 @@ func LangListGoogle(listType string) []List {
 			var ListInfo List
 			ListInfo.Name = el.ChildText("a")
 			if listType == "tl" {
-			ListInfo.Id = strings.TrimPrefix(strings.TrimSuffix(el.ChildAttr("a", "href"), "&hl=en-US"), "./m?sl=en&tl=")
-		} else {
-			ListInfo.Id = strings.TrimPrefix(strings.TrimSuffix(el.ChildAttr("a", "href"), "&tl=en&hl=en-US"), "./m?sl=")
-		}
+				ListInfo.Id = strings.TrimPrefix(strings.TrimSuffix(el.ChildAttr("a", "href"), "&hl=en-US"), "./m?sl=en&tl=")
+			} else {
+				ListInfo.Id = strings.TrimPrefix(strings.TrimSuffix(el.ChildAttr("a", "href"), "&tl=en&hl=en-US"), "./m?sl=")
+			}
 			ListData = append(ListData, ListInfo)
 		})
 	})
-	url := "https://translate.google.com/m?sl=en&tl=en&hl=en-US&mui="+listType
+	url := "https://translate.google.com/m?sl=en&tl=en&hl=en-US&mui=" + listType
 	sc.Visit(url)
 	return ListData
 }
 func LangListReverso(listType string) []List {
 	// IDs got from original simplytranslate-web and trial and error. Usually first three letters of language.
-	var ListData = []List {
-		List {
-			Id: "ara",
+	var ListData = []List{
+		List{
+			Id:   "ara",
 			Name: "Arabic",
 		},
-		List {
-			Id: "chi",
+		List{
+			Id:   "chi",
 			Name: "Chinese (Simplified)",
 		},
-		List {
-			Id: "cze",
+		List{
+			Id:   "cze",
 			Name: "Czech",
 		},
-		List {
-			Id: "dan",
+		List{
+			Id:   "dan",
 			Name: "Danish",
 		},
-		List {
-			Id: "dut",
+		List{
+			Id:   "dut",
 			Name: "Dutch",
 		},
-		List {
-			Id: "eng",
+		List{
+			Id:   "eng",
 			Name: "English",
 		},
-		List {
-			Id: "fra",
+		List{
+			Id:   "fra",
 			Name: "French",
 		},
-		List {
-			Id: "ger",
+		List{
+			Id:   "ger",
 			Name: "German",
 		},
-		List {
-			Id: "gre",
+		List{
+			Id:   "gre",
 			Name: "Greek",
 		},
-		List {
-			Id: "Hebrew",
+		List{
+			Id:   "Hebrew",
 			Name: "heb",
 		},
-		List {
-			Id: "hin",
+		List{
+			Id:   "hin",
 			Name: "Hindi",
 		},
-		List {
-			Id: "hun",
+		List{
+			Id:   "hun",
 			Name: "Hungarian",
 		},
-		List {
-			Id: "ita",
+		List{
+			Id:   "ita",
 			Name: "Italian",
 		},
-		List {
-			Id: "jpn",
+		List{
+			Id:   "jpn",
 			Name: "Japanese",
 		},
-		List {
-			Id: "kor",
+		List{
+			Id:   "kor",
 			Name: "Korean",
 		},
-		List {
-			Id: "per",
+		List{
+			Id:   "per",
 			Name: "Persian",
 		},
-		List {
-			Id: "pol",
+		List{
+			Id:   "pol",
 			Name: "Polish",
 		},
-		List {
-			Id: "por",
+		List{
+			Id:   "por",
 			Name: "Portugese",
 		},
-		List {
-			Id: "rum",
+		List{
+			Id:   "rum",
 			Name: "Romanian",
 		},
-		List {
-			Id: "rus",
+		List{
+			Id:   "rus",
 			Name: "Russian",
 		},
-		List {
-			Id: "slo",
+		List{
+			Id:   "slo",
 			Name: "Slovakian",
 		},
-		List {
-			Id: "spa",
+		List{
+			Id:   "spa",
 			Name: "Spanish",
 		},
-		List {
-			Id: "swe",
+		List{
+			Id:   "swe",
 			Name: "Swedish",
 		},
-		List {
-			Id: "tha",
+		List{
+			Id:   "tha",
 			Name: "Thai",
 		},
-		List {
-			Id: "tur",
+		List{
+			Id:   "tur",
 			Name: "Turkish",
 		},
-		List {
-			Id: "ukr",
+		List{
+			Id:   "ukr",
 			Name: "Ukrainian",
 		},
 	}

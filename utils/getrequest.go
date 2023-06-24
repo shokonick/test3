@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"github.com/tidwall/gjson"
 	"bytes"
+	"github.com/tidwall/gjson"
 	"io"
 	"net/http"
 	"os"
