@@ -1,0 +1,15 @@
+{{ template "header" .}}
+
+<main>
+  <h2>{{.Title}}</h2>
+  <p>Try another instance or wait.</p>
+
+  <h2>Info</h2>
+  {{ range $key, $value := .ratelimit}}
+  <p>Limit: <b>{{.Limit}}</b></p>
+  <p>Remaining: <b>{{.Remaining}}</b></p>
+  {{ end }}
+
+  <i>Todo: implement GitHub API keys</i>
+</main>
+{{ template "footer" .}}

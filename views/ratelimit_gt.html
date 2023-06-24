@@ -1,0 +1,13 @@
+{{ template "header" .}}
+
+<main>
+  <h2>{{.Title}}</h2>
+  <p>Wait 5 minutes before trying again.</p>
+
+  <h2>Info</h2>
+  <p>
+    SimplyTranslate has implemented ratelimits in order to prevent rate-limits by Translation Engines.
+    You've been hit by the rate limiter.
+  </p>
+</main>
+{{ template "footer" .}}

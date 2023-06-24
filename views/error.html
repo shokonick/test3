@@ -1,0 +1,18 @@
+{{ template "header" .}}
+<main>
+  <div class="center">
+    <h1 style="color: red">Error</h1>
+    <h2>
+      Someone pushed to production. Just kidding, that's probably not what
+      happened. Here's the error:
+    </h2>
+    <pre class="error">{{.error}}</pre>
+    <h3>
+      Think this is a bug?
+      <a href="https://codeberg.org/aryak/simplytranslate/issues" target="_blank"
+        >Create an issue on Codeberg.</a
+      >
+    </h3>
+  </div>
+</main>
+{{ template "footer" .}}
