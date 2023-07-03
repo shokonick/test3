@@ -3,7 +3,6 @@ package utils
 import (
 	"github.com/gocolly/colly"
 	"os"
-	"strings"
 )
 
 func TranslateGoogle(to string, from string, query string) string {
