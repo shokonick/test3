@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"codeberg.org/aryak/simplytranslate/utils"
-	"fmt"
 	"github.com/spf13/cobra"
+	"fmt"
 )
 
 var engine string
@@ -24,6 +24,22 @@ var translateCmd = &cobra.Command{
 				fmt.Println(utils.LangListReverso(langlist))
 			} else {
 				fmt.Println(utils.TranslateReverso(dest, source, query))
+			}
+		} else if engine == "deepl" {
+			if langlist == "sl" {
+				fmt.Println(utils.LangListDeepl(langlist))
+			} else if langlist == "tl" {
+				fmt.Println(utils.LangListDeepl(langlist))
+			} else {
+				fmt.Println("Not Implemented yet.")
+			}
+		} else if engine == "libretranslate" {
+			if langlist == "sl" {
+				fmt.Println(utils.LangListLibreTranslate(langlist))
+			} else if langlist == "tl" {
+				fmt.Println(utils.LangListLibreTranslate(langlist))
+			} else {
+				fmt.Println(utils.TranslateLibreTranslate(dest, source, query))
 			}
 		} else if engine == "all" {
 			fmt.Println(utils.TranslateAll(dest, source, query))

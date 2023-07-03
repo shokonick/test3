@@ -3,14 +3,10 @@ module codeberg.org/aryak/simplytranslate
 go 1.20
 
 require (
-	github.com/alecthomas/chroma/v2 v2.7.0
-	github.com/carlmjohnson/requests v0.23.3
-	github.com/enescakir/emoji v1.0.0
 	github.com/gocolly/colly v1.2.0
 	github.com/gofiber/fiber/v2 v2.43.0
 	github.com/gofiber/template v1.8.0
 	github.com/joho/godotenv v1.5.1
-	github.com/microcosm-cc/bluemonday v1.0.23
 	github.com/spf13/cobra v1.6.1
 	github.com/tidwall/gjson v1.14.4
 )
@@ -22,14 +18,11 @@ require (
 	github.com/antchfx/htmlquery v1.3.0 // indirect
 	github.com/antchfx/xmlquery v1.3.15 // indirect
 	github.com/antchfx/xpath v1.2.4 // indirect
-	github.com/aymerick/douceur v0.2.0 // indirect
-	github.com/dlclark/regexp2 v1.8.1 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/gorilla/css v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/klauspost/compress v1.16.3 // indirect

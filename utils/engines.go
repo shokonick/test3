@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"github.com/gocolly/colly"
 	"os"
 	"strings"
@@ -33,12 +32,19 @@ func TranslateReverso(to string, from string, query string) string {
 	answer := gjsonArr[0].String()
 	return answer
 }
+func TranslateLibreTranslate(to string, from string, query string) string {
+	json := []byte(`{"q":"`+query+`","source":"`+from+`","target":"`+to+`"}`)
+	// TODO: Make it configurable
+	libreTranslateOut := GetRequest("https://translate.argosopentech.com/translate", json)
+	gjsonArr := libreTranslateOut.Get("translatedText").Array()
+	answer := gjsonArr[0].String()
+	return answer
+}
 func TranslateAll(to string, from string, query string) string {
 	reverso := TranslateReverso(to, from, query)
 	google := TranslateGoogle(to, from, query)
-	fmt.Println("Google: " + google)
-	fmt.Println("Reverso: " + reverso)
-	return "Google: " + google + "\nReverso: " + reverso
+	libretranslate := TranslateLibreTranslate(to, from, query)
+	return "Google: " + google + "\nReverso: " + reverso + "\nLibreTranslate: " + libretranslate
 }
 func LangListGoogle(listType string) []List {
 	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
@@ -61,6 +67,26 @@ func LangListGoogle(listType string) []List {
 	})
 	url := "https://translate.google.com/m?sl=en&tl=en&hl=en-US&mui=" + listType
 	sc.Visit(url)
+	return ListData
+}
+func LangListLibreTranslate(listType string) []List {
+	// TODO: Make it configurable
+	libreTranslateOut := GetRequest("https://translate.argosopentech.com/languages", []byte(""))
+	gjsonArr := libreTranslateOut.Array()
+	var ListData []List
+	for _, r := range gjsonArr {
+		code := r.Get("code").String()
+		name := r.Get("name").String()
+	
+		ListData = append(ListData, List{Id: code, Name: name})
+	}
+	if listType == "sl" {
+		auto := List{
+			Id:   "auto",
+			Name: "Detect Language",
+		}
+		ListData = append(ListData, auto)
+	}
 	return ListData
 }
 func LangListReverso(listType string) []List {
@@ -170,6 +196,136 @@ func LangListReverso(listType string) []List {
 			Id:   "ukr",
 			Name: "Ukrainian",
 		},
+	}
+	return ListData
+}
+func LangListDeepl(listType string) []List {
+	// IDs got from deepl.com/translator
+	// Every time you change language, the # will get updated with the lang code.
+	var ListData = []List{
+		List{
+			Id:   "bg",
+			Name: "Bulgarian",
+		},
+		List{
+			Id:   "zh",
+			Name: "Chinese",
+		},
+		List{
+			Id:   "cs",
+			Name: "Czech",
+		},
+		List{
+			Id:   "da",
+			Name: "Danish",
+		},
+		List{
+			Id:   "nl",
+			Name: "Dutch",
+		},
+		List{
+			Id:   "en",
+			Name: "English",
+		},
+		List{
+			Id:   "et",
+			Name: "Estonian",
+		},
+		List{
+			Id:   "fi",
+			Name: "Finnish",
+		},
+		List{
+			Id:   "fr",
+			Name: "French",
+		},
+		List{
+			Id:   "de",
+			Name: "Germany",
+		},
+		List{
+			Id:   "el",
+			Name: "Greek",
+		},
+		List{
+			Id:   "hu",
+			Name: "Hungarian",
+		},
+		List{
+			Id:   "id",
+			Name: "Indonesian",
+		},
+		List{
+			Id:   "it",
+			Name: "Italian",
+		},
+		List{
+			Id:   "ja",
+			Name: "Japanese",
+		},
+		List{
+			Id:   "ko",
+			Name: "Korean",
+		},
+		List{
+			Id:   "lv",
+			Name: "Latvian",
+		},
+		List{
+			Id:   "lt",
+			Name: "Lithuanian",
+		},
+		List{
+			Id:   "nb",
+			Name: "Norwegian",
+		},
+		List{
+			Id:   "pl",
+			Name: "Polish",
+		},
+		List{
+			Id:   "pt",
+			Name: "Portugese",
+		},
+		List{
+			Id:   "ro",
+			Name: "Romanian",
+		},
+		List{
+			Id:   "ru",
+			Name: "Russian",
+		},
+		List{
+			Id:   "sk",
+			Name: "Slovak",
+		},
+		List{
+			Id:   "sl",
+			Name: "Slovenian",
+		},
+		List{
+			Id:   "es",
+			Name: "Spanish",
+		},
+		List{
+			Id:   "sv",
+			Name: "Swedish",
+		},
+		List{
+			Id:   "tr",
+			Name: "Turkish",
+		},
+		List{
+			Id:   "uk",
+			Name: "Ukrainian",
+		},
+	}
+	if listType == "sl" {
+		auto := List{
+			Id:   "auto",
+			Name: "Detect Language",
+		}
+		ListData = append(ListData, auto)
 	}
 	return ListData
 }
