@@ -6,13 +6,11 @@ import (
 	"os"
 	"runtime"
 	"strings"
-	"time"
 
 	"codeberg.org/aryak/simplytranslate/pages"
 	"codeberg.org/aryak/simplytranslate/utils"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	//"github.com/gofiber/fiber/v2/middleware/limiter"
 	//	For debugging purposes
@@ -61,9 +59,6 @@ func Serve(port string) {
 		},
 	})
 
-	app.Use(cache.New(cache.Config{
-		Expiration: 5 * time.Minute,
-	}))
 	// For debugging purposes
 	// app.Use(logger.New(logger.Config{
 	// 	Format: "[${ip}]:${port} ${status} - ${method} ${path} ${queryParams}\n",
