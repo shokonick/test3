@@ -49,7 +49,6 @@ func Serve(port string) {
 			err = ctx.Status(code).Render("error", fiber.Map{
 				"error":  err,
 				"link":   link,
-				"branch": utils.Branch,
 			})
 			if err != nil {
 				return ctx.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
@@ -76,7 +75,6 @@ func Serve(port string) {
 	//	LimitReached: func(c *fiber.Ctx) error {
 	//		return c.Status(429).Render("ratelimit_gt", fiber.Map{
 	//			"Title":  "Rate limit exceeded",
-	//			"branch": utils.Branch,
 	//		})
 	//	},
 	//})
@@ -99,6 +97,10 @@ func Serve(port string) {
 	})
 
 	app.Get("/", pages.HandleIndex)
+	//app.Get("/api/translate", pages.HandleTranslateApi)
+	app.Get("/api/source_languages", pages.HandleSourceLanguages)
+	app.Get("/api/target_languages", pages.HandleTargetLanguages)
+	app.Get("/api/tts", pages.HandleTTS)
 	app.Static("/css", "./public/css", staticConfig)
 	app.Static("/robots.txt", "./public/robots.txt", staticConfig)
 	app.Static("/favicon.ico", "./public/assets/favicon.ico", staticConfig)

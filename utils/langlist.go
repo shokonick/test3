@@ -94,8 +94,8 @@ func LangListReverso(listType string) []List {
 			Name: "Greek",
 		},
 		List{
-			Id:   "Hebrew",
-			Name: "heb",
+			Id:   "heb",
+			Name: "Hebrew",
 		},
 		List{
 			Id:   "hin",
