@@ -22,6 +22,9 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 	} else if engine == "watson" {
 		data = utils.LangListWatson("sl")
 	}
+	} else if engine == "yandex" {
+		data = utils.LangListYandex("sl")
+	}
 	return c.JSON(data)
 }
 func HandleTargetLanguages(c *fiber.Ctx) error {
@@ -40,6 +43,9 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 		data = utils.LangListDeepl("tl")
 	} else if engine == "watson" {
 		data = utils.LangListWatson("tl")
+	}
+	} else if engine == "yandex" {
+		data = utils.LangListYandex("tl")
 	}
 	return c.JSON(data)
 }
