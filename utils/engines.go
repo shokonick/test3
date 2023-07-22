@@ -34,6 +34,13 @@ func TranslateLibreTranslate(to string, from string, query string) string {
 	answer := gjsonArr[0].String()
 	return answer
 }
+func TranslateWatson(to string, from string, query string) string {
+	json := []byte(`{"text":"`+query+`","source":"`+from+`","target":"`+to+`"}`)
+	watsonOut:= GetRequest("https://www.ibm.com/demos/live/watson-language-translator/api/translate/text", json)
+	gjsonArr := watsonOut.Get("payload.translations.0.translation").Array()
+	answer := gjsonArr[0].String()
+	return answer
+}
 func TranslateAll(to string, from string, query string) string {
 	reverso := TranslateReverso(to, from, query)
 	google := TranslateGoogle(to, from, query)

@@ -41,6 +41,14 @@ var translateCmd = &cobra.Command{
 			} else {
 				fmt.Println(utils.TranslateLibreTranslate(dest, source, query))
 			}
+		} else if engine == "watson" {
+			if langlist == "sl" {
+				fmt.Println(utils.LangListWatson(langlist))
+			} else if langlist == "tl" {
+				fmt.Println(utils.LangListWatson(langlist))
+			} else {
+				fmt.Println(utils.TranslateWatson(dest, source, query))
+			}
 		} else if engine == "all" {
 			fmt.Println(utils.TranslateAll(dest, source, query))
 		} else {

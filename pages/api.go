@@ -19,6 +19,8 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 		data = utils.LangListReverso("sl")
 	} else if engine == "deepl" {
 		data = utils.LangListDeepl("sl")
+	} else if engine == "watson" {
+		data = utils.LangListWatson("sl")
 	}
 	return c.JSON(data)
 }
@@ -36,6 +38,8 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 		data = utils.LangListReverso("tl")
 	} else if engine == "deepl" {
 		data = utils.LangListDeepl("tl")
+	} else if engine == "watson" {
+		data = utils.LangListWatson("tl")
 	}
 	return c.JSON(data)
 }
