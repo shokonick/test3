@@ -49,6 +49,26 @@ var translateCmd = &cobra.Command{
 			} else {
 				fmt.Println(utils.TranslateWatson(dest, source, query))
 			}
+		} else if engine == "yandex" {
+			if langlist == "sl" {
+				langList := utils.LangListYandex(langlist)
+				    for _, num := range langList {
+        				fmt.Println("List{")
+						fmt.Println(`Id: "`+num.Id+`",`)
+						fmt.Println(`Name: "`+num.Name+`",`)
+						fmt.Println("},")
+    				}
+			} else if langlist == "tl" {
+				langList := utils.LangListYandex(langlist)
+				    for _, num := range langList {
+        				fmt.Println("List{")
+						fmt.Println(`Id: "`+num.Id+`",`)
+						fmt.Println(`Name: "`+num.Name+`",`)
+						fmt.Println("},")
+    				}
+			} else {
+				fmt.Println(utils.TranslateYandex(dest, source, query))
+			}
 		} else if engine == "all" {
 			fmt.Println(utils.TranslateAll(dest, source, query))
 		} else {
