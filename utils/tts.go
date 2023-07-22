@@ -2,6 +2,7 @@ package utils
 
 import (
 	"github.com/carlmjohnson/requests"
+	"github.com/google/go-querystring/query"
 	"os"
 	"context"
 	"encoding/base64"
@@ -12,10 +13,17 @@ type ReversoTTS struct {
 	Voice string
 }
 
-func TTSGoogle(lang string, query string) string {
-	params := "?tl="+lang+"&q="+query+"&client=tw-ob"
+func TTSGoogle(lang string, text string) string {
+	type Options struct {
+	  Lang string `url:"tl"`
+	  Text string `url:"q"`
+	  Client string `url:"client"`
+	}
+	opt := Options{ lang, text, "tw-ob" }
+	v, _ := query.Values(opt)
+
 	var file string
-	url := "https://translate.google.com/translate_tts"+params
+	url := "https://translate.google.com/translate_tts?"+v.Encode()
 	err := requests.
 		URL(url).
 		ToString(&file).
@@ -25,7 +33,7 @@ func TTSGoogle(lang string, query string) string {
 	}
 	return file
 }
-func TTSReverso(lang string, query string) string {
+func TTSReverso(lang string, text string) string {
 	var TTSData = []ReversoTTS{
 		// http://voice.reverso.net/RestPronunciation.svc/v1/output=json/GetAvailableVoices with randomized deduplication
 		ReversoTTS{
@@ -110,7 +118,7 @@ func TTSReverso(lang string, query string) string {
 		},
 	}
 	// https://voice.reverso.net/RestPronunciation.svc/v1/output=json/GetVoiceStream/voiceName=Lulu22k?voiceSpeed=80&inputText=6K%20V6aqM Base64 input text
-	text := base64.StdEncoding.EncodeToString([]byte(query))
+	text2 := base64.StdEncoding.EncodeToString([]byte(text))
     var voice string
     for _, s := range TTSData {
         if s.Id == lang {
@@ -119,17 +127,20 @@ func TTSReverso(lang string, query string) string {
         }
     }
 
-	params := "voiceName="+voice+"?voiceSpeed=80&inputText="+text
+	type Options struct {
+	  VoiceSpeed int `url:"voiceSpeed"`
+	  Text string `url:"inputText"`
+	}
+	opt := Options{ 80, text2 }
+	v, _ := query.Values(opt)
 
 	var file string
-
-	url := "https://voice.reverso.net/RestPronunciation.svc/v1/output=json/GetVoiceStream/"+params
+	url := "https://voice.reverso.net/RestPronunciation.svc/v1/output=json/GetVoiceStream/voiceName="+voice+"?"+v.Encode()
 
 	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
 	if !ok {
 		UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 	}
-
 	err := requests.
 		URL(url).
 		ToString(&file).
