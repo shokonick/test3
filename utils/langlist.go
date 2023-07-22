@@ -36,7 +36,7 @@ func LangListGoogle(listType string) []List {
 }
 func LangListLibreTranslate(listType string) []List {
 	// TODO: Make it configurable
-	libreTranslateOut := GetRequest("https://translate.argosopentech.com/languages", []byte(""))
+	libreTranslateOut := PostRequest("https://translate.argosopentech.com/languages", []byte(""))
 	gjsonArr := libreTranslateOut.Array()
 	var ListData []List
 	for _, r := range gjsonArr {
