@@ -10,7 +10,7 @@ package utils
 //	Name string
 //	Id   string
 //}
-//// To get new language lists for google yandex and libertranslate. 
+//// To get new language lists for google yandex and libertranslate.
 //func LangListGoogle(listType string) []List {
 //	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
 //	if !ok {
@@ -42,7 +42,7 @@ package utils
 //	for _, r := range gjsonArr {
 //		code := r.Get("code").String()
 //		name := r.Get("name").String()
-//	
+//
 //		ListData = append(ListData, List{Id: code, Name: name})
 //	}
 //	if listType == "sl" {

@@ -47,8 +47,8 @@ func Serve(port string) {
 			}
 			link := strings.TrimPrefix(err.Error(), "Cannot GET ")
 			err = ctx.Status(code).Render("error", fiber.Map{
-				"error":  err,
-				"link":   link,
+				"error": err,
+				"link":  link,
 			})
 			if err != nil {
 				return ctx.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")

@@ -21,7 +21,6 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 		data = utils.LangListDeepl("sl")
 	} else if engine == "watson" {
 		data = utils.LangListWatson("sl")
-	}
 	} else if engine == "yandex" {
 		data = utils.LangListYandex("sl")
 	}
@@ -43,7 +42,6 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 		data = utils.LangListDeepl("tl")
 	} else if engine == "watson" {
 		data = utils.LangListWatson("tl")
-	}
 	} else if engine == "yandex" {
 		data = utils.LangListYandex("tl")
 	}
@@ -52,7 +50,7 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 func HandleTTS(c *fiber.Ctx) error {
 	engine := c.Query("engine")
 	lang := c.Query("lang")
-	text := c.Query("text") 
+	text := c.Query("text")
 	// Why does go not have an andor statement :(
 	if engine == "" {
 		return c.SendStatus(fiber.StatusBadRequest)
@@ -67,6 +65,6 @@ func HandleTTS(c *fiber.Ctx) error {
 	} else if engine == "reverso" {
 		data = utils.TTSReverso(lang, text)
 	}
-  	c.Set("Content-Type", "audio/mpeg")
+	c.Set("Content-Type", "audio/mpeg")
 	return c.Send([]byte(data))
 }

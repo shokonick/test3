@@ -5,7 +5,6 @@ type List struct {
 	Id   string
 }
 
-
 func LangListReverso(listType string) []List {
 	// IDs got from original simplytranslate-web and trial and error. Usually first three letters of language.
 	var ListData = []List{

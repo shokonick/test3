@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"codeberg.org/aryak/simplytranslate/utils"
-	"github.com/spf13/cobra"
 	"fmt"
+	"github.com/spf13/cobra"
 )
 
 var file string

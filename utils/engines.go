@@ -17,14 +17,14 @@ func TranslateGoogle(to string, from string, text string) string {
 		answer = e.Text
 	})
 	type Options struct {
-	  To string `url:"tl"`
-	  UI string `url:"hl"`
-	  From string `url:"sl"`
-	  Text string `url:"q"`
+		To   string `url:"tl"`
+		UI   string `url:"hl"`
+		From string `url:"sl"`
+		Text string `url:"q"`
 	}
-	opt := Options{ to, to, from, text }
+	opt := Options{to, to, from, text}
 	v, _ := query.Values(opt)
-	url := "https://translate.google.com/m?"+v.Encode()
+	url := "https://translate.google.com/m?" + v.Encode()
 	sc.Visit(url)
 	return answer
 }
@@ -36,7 +36,7 @@ func TranslateReverso(to string, from string, query string) string {
 	return answer
 }
 func TranslateLibreTranslate(to string, from string, query string) string {
-	json := []byte(`{"q":"`+query+`","source":"`+from+`","target":"`+to+`"}`)
+	json := []byte(`{"q":"` + query + `","source":"` + from + `","target":"` + to + `"}`)
 	// TODO: Make it configurable
 	libreTranslateOut := PostRequest("https://translate.argosopentech.com/translate", json)
 	gjsonArr := libreTranslateOut.Get("translatedText").Array()
@@ -44,24 +44,24 @@ func TranslateLibreTranslate(to string, from string, query string) string {
 	return answer
 }
 func TranslateWatson(to string, from string, query string) string {
-	json := []byte(`{"text":"`+query+`","source":"`+from+`","target":"`+to+`"}`)
-	watsonOut:= PostRequest("https://www.ibm.com/demos/live/watson-language-translator/api/translate/text", json)
+	json := []byte(`{"text":"` + query + `","source":"` + from + `","target":"` + to + `"}`)
+	watsonOut := PostRequest("https://www.ibm.com/demos/live/watson-language-translator/api/translate/text", json)
 	gjsonArr := watsonOut.Get("payload.translations.0.translation").Array()
 	answer := gjsonArr[0].String()
 	return answer
 }
 func TranslateYandex(to string, from string, text string) string {
 	type Options struct {
-	  Translate string `url:"lang"`
-	  Text string `url:"text"`
-	  Srv string `url:"srv"`
-	  Id string `url:"id"`
-	  Reason string `url:"reason"`
+		Translate string `url:"lang"`
+		Text      string `url:"text"`
+		Srv       string `url:"srv"`
+		Id        string `url:"id"`
+		Reason    string `url:"reason"`
 	}
-	opt := Options{ from+"-"+to, text, "tr-mobile", "c2317111.64bac36a.ab16ef22.74722d6d6f62696c65-0-0", "submit"}
+	opt := Options{from + "-" + to, text, "tr-mobile", "c2317111.64bac36a.ab16ef22.74722d6d6f62696c65-0-0", "submit"}
 	v, _ := query.Values(opt)
 
-	yandexOut := GetRequest("https://translate.yandex.net/api/v1/tr.json/translate?"+v.Encode())
+	yandexOut := GetRequest("https://translate.yandex.net/api/v1/tr.json/translate?" + v.Encode())
 	gjsonArr := yandexOut.Get("text.0").Array()
 	answer := gjsonArr[0].String()
 	return answer

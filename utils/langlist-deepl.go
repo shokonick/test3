@@ -130,4 +130,3 @@ func LangListDeepl(listType string) []List {
 	}
 	return ListData
 }
-

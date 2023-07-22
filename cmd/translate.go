@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"codeberg.org/aryak/simplytranslate/utils"
-	"github.com/spf13/cobra"
 	"fmt"
+	"github.com/spf13/cobra"
 )
 
 var engine string
@@ -51,21 +51,9 @@ var translateCmd = &cobra.Command{
 			}
 		} else if engine == "yandex" {
 			if langlist == "sl" {
-				langList := utils.LangListYandex(langlist)
-				    for _, num := range langList {
-        				fmt.Println("List{")
-						fmt.Println(`Id: "`+num.Id+`",`)
-						fmt.Println(`Name: "`+num.Name+`",`)
-						fmt.Println("},")
-    				}
+				fmt.Println(utils.LangListYandex(langlist))
 			} else if langlist == "tl" {
-				langList := utils.LangListYandex(langlist)
-				    for _, num := range langList {
-        				fmt.Println("List{")
-						fmt.Println(`Id: "`+num.Id+`",`)
-						fmt.Println(`Name: "`+num.Name+`",`)
-						fmt.Println("},")
-    				}
+				fmt.Println(utils.LangListYandex(langlist))
 			} else {
 				fmt.Println(utils.TranslateYandex(dest, source, query))
 			}
