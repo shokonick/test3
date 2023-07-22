@@ -52,6 +52,10 @@ func LangListWatson(listType string) []List {
 			Name: "Dutch",
 		},
 		List{
+			Id:   "en",
+			Name: "English",
+		},
+		List{
 			Id:   "et",
 			Name: "Estonian",
 		},
