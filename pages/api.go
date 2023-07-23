@@ -23,6 +23,8 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 		data = utils.LangListWatson("sl")
 	} else if engine == "yandex" {
 		data = utils.LangListYandex("sl")
+	} else if engine == "mymemory" {
+		data = utils.LangListMyMemory("sl")
 	}
 	return c.JSON(data)
 }
@@ -44,6 +46,8 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 		data = utils.LangListWatson("tl")
 	} else if engine == "yandex" {
 		data = utils.LangListYandex("tl")
+	} else if engine == "mymemory" {
+		data = utils.LangListMyMemory("tl")
 	}
 	return c.JSON(data)
 }

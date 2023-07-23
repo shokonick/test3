@@ -133,6 +133,37 @@ func TranslateWatson(to string, from string, query string) string {
 	answer := gjsonArr[0].String()
 	return answer
 }
+func TranslateMyMemory(to string, from string, text string) string {
+	var ToValid bool
+	var FromValid bool
+	for _, v := range LangListMyMemory("sl") {
+		if v.Id == to {
+			ToValid = true	
+		}
+		if v.Id == from {
+			FromValid = true
+		}
+		if FromValid == true && ToValid == true {
+			break
+		}
+	}
+	if ToValid != true {
+		return "Target Language Code invalid"
+	}
+	if FromValid != true {
+		return "Source Language Code invalid"
+	}
+	type Options struct {
+		Translate string `url:"langpair"`
+		Text      string `url:"q"`
+	}
+	opt := Options{ from+"|"+to, text }
+	v, _ := query.Values(opt)
+	myMemoryOut := GetRequest("https://api.mymemory.translated.net/get?" + v.Encode())
+	gjsonArr := myMemoryOut.Get("responseData.translatedText").Array()
+	answer := gjsonArr[0].String()
+	return answer
+}
 func TranslateYandex(to string, from string, text string) string {
 	var ToValid bool
 	var FromValid bool
