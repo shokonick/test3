@@ -3,6 +3,7 @@ package utils
 import (
 	"github.com/gocolly/colly"
 	"github.com/google/go-querystring/query"
+	"github.com/OwO-Network/gdeeplx"
 	"os"
 )
 
@@ -198,6 +199,34 @@ func TranslateYandex(to string, from string, text string) string {
 	gjsonArr := yandexOut.Get("text.0").Array()
 	answer := gjsonArr[0].String()
 	return answer
+}
+func TranslateDeepl(to string, from string, text string) string {
+	var ToValid bool
+	var FromValid bool
+	for _, v := range LangListDeepl("sl") {
+		if v.Id == to {
+			ToValid = true	
+		}
+		if v.Id == from {
+			FromValid = true
+		}
+		if FromValid == true && ToValid == true {
+			break
+		}
+	}
+	if ToValid != true {
+		return "Target Language Code invalid"
+	}
+	if FromValid != true {
+		return "Source Language Code invalid"
+	}
+	answer, err := gdeeplx.Translate(text, from, to, 0)
+	if err != nil {
+		return "failed"
+	}
+	answer1 := answer.(map[string]interface{})
+	ans:= answer1["data"].(string)
+	return ans
 }
 func TranslateAll(to string, from string, query string) string {
 	reverso := TranslateReverso(to, from, query)

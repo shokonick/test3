@@ -15,7 +15,9 @@ require (
 )
 
 require (
+	github.com/OwO-Network/gdeeplx v0.0.1 // indirect
 	github.com/PuerkitoBio/goquery v1.8.1 // indirect
+	github.com/abadojack/whatlanggo v1.0.1 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/antchfx/htmlquery v1.3.0 // indirect

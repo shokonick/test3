@@ -31,7 +31,7 @@ var translateCmd = &cobra.Command{
 			} else if langlist == "tl" {
 				fmt.Println(utils.LangListDeepl(langlist))
 			} else {
-				fmt.Println("Not Implemented yet.")
+				fmt.Println(utils.TranslateDeepl(dest, source, query))
 			}
 		} else if engine == "libretranslate" {
 			if langlist == "sl" {

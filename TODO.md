@@ -6,6 +6,4 @@
 - Alternative words
 - Dictionary
 - Bing Translate
-- MyMemory
-- DeepL
 - ICIBA
