@@ -6,7 +6,7 @@ import (
 )
 
 func HandleSourceLanguages(c *fiber.Ctx) error {
-	engine := c.Query("engine")
+	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
@@ -29,7 +29,7 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 	return c.JSON(data)
 }
 func HandleTargetLanguages(c *fiber.Ctx) error {
-	engine := c.Query("engine")
+	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
@@ -37,7 +37,7 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 	if engine == "google" {
 		data = utils.LangListGoogle("tl")
 	} else if engine == "libre" {
-		data = utils.LangListLibreTranslate("sl")
+		data = utils.LangListLibreTranslate("tl")
 	} else if engine == "reverso" {
 		data = utils.LangListReverso("tl")
 	} else if engine == "deepl" {
@@ -52,8 +52,8 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 	return c.JSON(data)
 }
 func HandleTTS(c *fiber.Ctx) error {
-	engine := c.Query("engine")
-	lang := c.Query("lang")
+	engine := utils.Sanitize(c.Query("engine"), "alpha")
+	lang := utils.Sanitize(c.Query("lang"), "alpha")
 	text := c.Query("text")
 	// Why does go not have an andor statement :(
 	if engine == "" {
@@ -71,4 +71,36 @@ func HandleTTS(c *fiber.Ctx) error {
 	}
 	c.Set("Content-Type", "audio/mpeg")
 	return c.Send([]byte(data))
+}
+func HandleTranslate(c *fiber.Ctx) error {
+	engine := utils.Sanitize(c.Query("engine"), "alpha")
+	from := utils.Sanitize(c.Query("from"), "alpha")
+	to := utils.Sanitize(c.Query("to"), "alpha")
+	text := c.Query("text")
+	if engine == "" && from == "" && to == "" && text == ""{
+		return fiber.NewError(fiber.StatusBadRequest, "from, to, engine, text are required query strings.")
+	}
+	var data utils.LangOut
+	var err error
+	if engine == "google" {
+		data, err = utils.TranslateGoogle(to, from, text)
+	} else if engine == "libre" {
+		data, err = utils.TranslateLibreTranslate(to, from, text)
+	} else if engine == "reverso" {
+		data, err = utils.TranslateReverso(to, from, text)
+	} else if engine == "deepl" {
+		data, err = utils.TranslateDeepl(to, from, text)
+	} else if engine == "watson" {
+		data, err = utils.TranslateWatson(to, from, text)
+	} else if engine == "yandex" {
+		data, err = utils.TranslateYandex(to, from, text)
+	} else if engine == "mymemory" {
+		data, err = utils.TranslateMyMemory(to, from, text)
+	}
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
+	data.SourceLang = from
+	data.TargetLang = to
+	return c.JSON(data)
 }

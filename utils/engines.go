@@ -11,8 +11,10 @@ import (
 )
 
 type LangOut struct {
-	OutputText string
-	AutoDetect string
+	OutputText string `json:"translated-text"`
+	AutoDetect string `json:"detected"`
+	SourceLang string `json:"source_language"`
+	TargetLang string `json:"target_language"`
 }
 
 func TranslateGoogle(to string, from string, text string) (LangOut, error) {

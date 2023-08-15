@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"runtime"
-	"strings"
 
 	"codeberg.org/aryak/simplytranslate/pages"
 	"codeberg.org/aryak/simplytranslate/utils"
@@ -39,23 +38,6 @@ func Serve(port string) {
 		EnableTrustedProxyCheck: true,
 		TrustedProxies:          []string{"0.0.0.0/0"},
 		ProxyHeader:             fiber.HeaderXForwardedFor,
-		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-			code := fiber.StatusInternalServerError
-
-			if e, ok := err.(*fiber.Error); ok {
-				code = e.Code
-			}
-			link := strings.TrimPrefix(err.Error(), "Cannot GET ")
-			err = ctx.Status(code).Render("error", fiber.Map{
-				"error": err,
-				"link":  link,
-			})
-			if err != nil {
-				return ctx.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
-			}
-
-			return nil
-		},
 	})
 
 	// For debugging purposes
@@ -97,7 +79,7 @@ func Serve(port string) {
 	})
 
 	app.Get("/", pages.HandleIndex)
-	//app.Get("/api/translate", pages.HandleTranslateApi)
+	app.Get("/api/translate", pages.HandleTranslate)
 	app.Get("/api/source_languages", pages.HandleSourceLanguages)
 	app.Get("/api/target_languages", pages.HandleTargetLanguages)
 	app.Get("/api/tts", pages.HandleTTS)
