@@ -1,13 +1,13 @@
 package utils
 
 import (
-	"github.com/gocolly/colly"
-	"strings"
-    "github.com/google/uuid"
-	"github.com/google/go-querystring/query"
-	"github.com/OwO-Network/gdeeplx"
-	"os"
 	"errors"
+	"github.com/OwO-Network/gdeeplx"
+	"github.com/gocolly/colly"
+	"github.com/google/go-querystring/query"
+	"github.com/google/uuid"
+	"os"
+	"strings"
 )
 
 type LangOut struct {
@@ -26,7 +26,7 @@ func TranslateGoogle(to string, from string, text string) (LangOut, error) {
 	var FromValid bool
 	for _, v := range LangListGoogle("sl") {
 		if v.Id == to {
-			ToValid = true	
+			ToValid = true
 		}
 		if v.Id == from {
 			FromValid = true
@@ -70,7 +70,7 @@ func TranslateReverso(to string, from string, query string) (LangOut, error) {
 	var FromValid bool
 	for _, v := range LangListReverso("sl") {
 		if v.Id == to {
-			ToValid = true	
+			ToValid = true
 		}
 		if v.Id == from {
 			FromValid = true
@@ -97,7 +97,7 @@ func TranslateLibreTranslate(to string, from string, query string) (LangOut, err
 	var FromValid bool
 	for _, v := range LangListLibreTranslate("sl") {
 		if v.Id == to {
-			ToValid = true	
+			ToValid = true
 		}
 		if v.Id == from {
 			FromValid = true
@@ -125,7 +125,7 @@ func TranslateWatson(to string, from string, query string) (LangOut, error) {
 	var FromValid bool
 	for _, v := range LangListWatson("sl") {
 		if v.Id == to {
-			ToValid = true	
+			ToValid = true
 		}
 		if v.Id == from {
 			FromValid = true
@@ -152,7 +152,7 @@ func TranslateMyMemory(to string, from string, text string) (LangOut, error) {
 	var FromValid bool
 	for _, v := range LangListMyMemory("sl") {
 		if v.Id == to {
-			ToValid = true	
+			ToValid = true
 		}
 		if v.Id == from {
 			FromValid = true
@@ -171,7 +171,7 @@ func TranslateMyMemory(to string, from string, text string) (LangOut, error) {
 		Translate string `url:"langpair"`
 		Text      string `url:"q"`
 	}
-	opt := Options{ from+"|"+to, text }
+	opt := Options{from + "|" + to, text}
 	v, _ := query.Values(opt)
 	myMemoryOut := GetRequest("https://api.mymemory.translated.net/get?" + v.Encode())
 	gjsonArr := myMemoryOut.Get("responseData.translatedText").Array()
@@ -184,7 +184,7 @@ func TranslateYandex(to string, from string, text string) (LangOut, error) {
 	var FromValid bool
 	for _, v := range LangListYandex("sl") {
 		if v.Id == to {
-			ToValid = true	
+			ToValid = true
 		}
 		if v.Id == from {
 			FromValid = true
@@ -205,12 +205,12 @@ func TranslateYandex(to string, from string, text string) (LangOut, error) {
 		Srv       string `url:"srv"`
 		Id        string `url:"sid"`
 	}
-    uuidWithHyphen := uuid.New()
-    uuid := strings.Replace(uuidWithHyphen.String(), "-", "", -1)
-	opt := Options{from + "-" + to, text, "android", uuid+"-0-0"}
+	uuidWithHyphen := uuid.New()
+	uuid := strings.Replace(uuidWithHyphen.String(), "-", "", -1)
+	opt := Options{from + "-" + to, text, "android", uuid + "-0-0"}
 	v, _ := query.Values(opt)
 
-	yandexOut := PostRequest("https://translate.yandex.net/api/v1/tr.json/translate?" + v.Encode(), []byte(""))
+	yandexOut := PostRequest("https://translate.yandex.net/api/v1/tr.json/translate?"+v.Encode(), []byte(""))
 	gjsonArr := yandexOut.Get("text.0").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
@@ -221,7 +221,7 @@ func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	var FromValid bool
 	for _, v := range LangListDeepl("sl") {
 		if v.Id == to {
-			ToValid = true	
+			ToValid = true
 		}
 		if v.Id == from {
 			FromValid = true
@@ -241,7 +241,7 @@ func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 		return LangOut{}, errors.New("failed")
 	}
 	answer1 := answer.(map[string]interface{})
-	ans:= answer1["data"].(string)
+	ans := answer1["data"].(string)
 	var langout LangOut
 	langout.OutputText = ans
 	return langout, nil
