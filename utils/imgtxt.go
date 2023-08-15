@@ -4,10 +4,10 @@ import (
 	"github.com/otiai10/gosseract/v2"
 )
 
-func ImgTxt(file string) string {
+func ImgTxt(file string) (string, error) {
 	client := gosseract.NewClient()
 	defer client.Close()
 	client.SetImage(file)
-	text, _ := client.Text()
-	return text
+	text, err := client.Text()
+	return text, err
 }

@@ -13,7 +13,12 @@ var imgtxtCmd = &cobra.Command{
 	Short: "Image -> Text.",
 	Long:  `Convert given image (filename) to text using gosseract.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(utils.ImgTxt(file))
+		text, err := utils.ImgTxt(file)
+		if err != nil {
+			fmt.Println("Failed to convert image to text")
+		} else {
+			fmt.Println(text)
+		}
 	},
 }
 

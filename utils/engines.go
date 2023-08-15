@@ -2,12 +2,20 @@ package utils
 
 import (
 	"github.com/gocolly/colly"
+	"strings"
+    "github.com/google/uuid"
 	"github.com/google/go-querystring/query"
 	"github.com/OwO-Network/gdeeplx"
 	"os"
+	"errors"
 )
 
-func TranslateGoogle(to string, from string, text string) string {
+type LangOut struct {
+	OutputText string
+	AutoDetect string
+}
+
+func TranslateGoogle(to string, from string, text string) (LangOut, error) {
 	// For some reason google uses no for norwegian instead of nb like the rest of the translators. This is for the All function primarily
 	if to == "nb" {
 		to = "no"
@@ -28,10 +36,10 @@ func TranslateGoogle(to string, from string, text string) string {
 		}
 	}
 	if ToValid != true {
-		return "Target Language Code invalid"
+		return LangOut{}, errors.New("Target Language Code invalid")
 	}
 	if FromValid != true {
-		return "Source Language Code invalid"
+		return LangOut{}, errors.New("Source language code invalid")
 	}
 
 	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
@@ -53,9 +61,11 @@ func TranslateGoogle(to string, from string, text string) string {
 	v, _ := query.Values(opt)
 	url := "https://translate.google.com/m?" + v.Encode()
 	sc.Visit(url)
-	return answer
+	var langout LangOut
+	langout.OutputText = answer
+	return langout, nil
 }
-func TranslateReverso(to string, from string, query string) string {
+func TranslateReverso(to string, from string, query string) (LangOut, error) {
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListReverso("sl") {
@@ -70,18 +80,19 @@ func TranslateReverso(to string, from string, query string) string {
 		}
 	}
 	if ToValid != true {
-		return "Target Language Code invalid"
+		return LangOut{}, errors.New("Target language code invalid")
 	}
 	if FromValid != true {
-		return "Source Language Code invalid"
+		return LangOut{}, errors.New("Source language code invalid")
 	}
 	json := []byte(`{ "format": "text", "from": "` + from + `", "to": "` + to + `", "input":"` + query + `", "options": {"sentenceSplitter": false, "origin":"translation.web", contextResults: false, languageDetection: true} }`)
 	reversoOut := PostRequest("https://api.reverso.net/translate/v1/translation", json)
 	gjsonArr := reversoOut.Get("translation").Array()
-	answer := gjsonArr[0].String()
-	return answer
+	var langout LangOut
+	langout.OutputText = gjsonArr[0].String()
+	return langout, nil
 }
-func TranslateLibreTranslate(to string, from string, query string) string {
+func TranslateLibreTranslate(to string, from string, query string) (LangOut, error) {
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListLibreTranslate("sl") {
@@ -96,19 +107,20 @@ func TranslateLibreTranslate(to string, from string, query string) string {
 		}
 	}
 	if ToValid != true {
-		return "Target Language Code invalid"
+		return LangOut{}, errors.New("Target language code invalid")
 	}
 	if FromValid != true {
-		return "Source Language Code invalid"
+		return LangOut{}, errors.New("Source language code invalid")
 	}
 	json := []byte(`{"q":"` + query + `","source":"` + from + `","target":"` + to + `"}`)
 	// TODO: Make it configurable
 	libreTranslateOut := PostRequest("https://translate.argosopentech.com/translate", json)
 	gjsonArr := libreTranslateOut.Get("translatedText").Array()
-	answer := gjsonArr[0].String()
-	return answer
+	var langout LangOut
+	langout.OutputText = gjsonArr[0].String()
+	return langout, nil
 }
-func TranslateWatson(to string, from string, query string) string {
+func TranslateWatson(to string, from string, query string) (LangOut, error) {
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListWatson("sl") {
@@ -123,18 +135,19 @@ func TranslateWatson(to string, from string, query string) string {
 		}
 	}
 	if ToValid != true {
-		return "Target Language Code invalid"
+		return LangOut{}, errors.New("Target language code invalid")
 	}
 	if FromValid != true {
-		return "Source Language Code invalid"
+		return LangOut{}, errors.New("Source language code invalid")
 	}
 	json := []byte(`{"text":"` + query + `","source":"` + from + `","target":"` + to + `"}`)
 	watsonOut := PostRequest("https://www.ibm.com/demos/live/watson-language-translator/api/translate/text", json)
 	gjsonArr := watsonOut.Get("payload.translations.0.translation").Array()
-	answer := gjsonArr[0].String()
-	return answer
+	var langout LangOut
+	langout.OutputText = gjsonArr[0].String()
+	return langout, nil
 }
-func TranslateMyMemory(to string, from string, text string) string {
+func TranslateMyMemory(to string, from string, text string) (LangOut, error) {
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListMyMemory("sl") {
@@ -149,10 +162,10 @@ func TranslateMyMemory(to string, from string, text string) string {
 		}
 	}
 	if ToValid != true {
-		return "Target Language Code invalid"
+		return LangOut{}, errors.New("Target language code invalid")
 	}
 	if FromValid != true {
-		return "Source Language Code invalid"
+		return LangOut{}, errors.New("Source language code invalid")
 	}
 	type Options struct {
 		Translate string `url:"langpair"`
@@ -162,10 +175,11 @@ func TranslateMyMemory(to string, from string, text string) string {
 	v, _ := query.Values(opt)
 	myMemoryOut := GetRequest("https://api.mymemory.translated.net/get?" + v.Encode())
 	gjsonArr := myMemoryOut.Get("responseData.translatedText").Array()
-	answer := gjsonArr[0].String()
-	return answer
+	var langout LangOut
+	langout.OutputText = gjsonArr[0].String()
+	return langout, nil
 }
-func TranslateYandex(to string, from string, text string) string {
+func TranslateYandex(to string, from string, text string) (LangOut, error) {
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListYandex("sl") {
@@ -180,27 +194,29 @@ func TranslateYandex(to string, from string, text string) string {
 		}
 	}
 	if ToValid != true {
-		return "Target Language Code invalid"
+		return LangOut{}, errors.New("Target language code invalid")
 	}
 	if FromValid != true {
-		return "Source Language Code invalid"
+		return LangOut{}, errors.New("Source language code invalid")
 	}
 	type Options struct {
 		Translate string `url:"lang"`
 		Text      string `url:"text"`
 		Srv       string `url:"srv"`
-		Id        string `url:"id"`
-		Reason    string `url:"reason"`
+		Id        string `url:"sid"`
 	}
-	opt := Options{from + "-" + to, text, "tr-mobile", "c2317111.64bac36a.ab16ef22.74722d6d6f62696c65-0-0", "submit"}
+    uuidWithHyphen := uuid.New()
+    uuid := strings.Replace(uuidWithHyphen.String(), "-", "", -1)
+	opt := Options{from + "-" + to, text, "android", uuid+"-0-0"}
 	v, _ := query.Values(opt)
 
-	yandexOut := GetRequest("https://translate.yandex.net/api/v1/tr.json/translate?" + v.Encode())
+	yandexOut := PostRequest("https://translate.yandex.net/api/v1/tr.json/translate?" + v.Encode(), []byte(""))
 	gjsonArr := yandexOut.Get("text.0").Array()
-	answer := gjsonArr[0].String()
-	return answer
+	var langout LangOut
+	langout.OutputText = gjsonArr[0].String()
+	return langout, nil
 }
-func TranslateDeepl(to string, from string, text string) string {
+func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListDeepl("sl") {
@@ -215,24 +231,28 @@ func TranslateDeepl(to string, from string, text string) string {
 		}
 	}
 	if ToValid != true {
-		return "Target Language Code invalid"
+		return LangOut{}, errors.New("Target language code invalid")
 	}
 	if FromValid != true {
-		return "Source Language Code invalid"
+		return LangOut{}, errors.New("Source language code invalid")
 	}
 	answer, err := gdeeplx.Translate(text, from, to, 0)
 	if err != nil {
-		return "failed"
+		return LangOut{}, errors.New("failed")
 	}
 	answer1 := answer.(map[string]interface{})
 	ans:= answer1["data"].(string)
-	return ans
+	var langout LangOut
+	langout.OutputText = ans
+	return langout, nil
 }
-func TranslateAll(to string, from string, query string) string {
-	reverso := TranslateReverso(to, from, query)
-	google := TranslateGoogle(to, from, query)
-	libretranslate := TranslateLibreTranslate(to, from, query)
-	watson := TranslateWatson(to, from, query)
-	yandex := TranslateYandex(to, from, query)
-	return "Google: " + google + "\nReverso: " + reverso + "\nLibreTranslate: " + libretranslate + "\nWatson: "+ watson + "\nYandex: "+ yandex
+func TranslateAll(to string, from string, query string) (string, string, string, string, string, string, string) {
+	reverso, _ := TranslateReverso(to, from, query)
+	google, _ := TranslateGoogle(to, from, query)
+	libretranslate, _ := TranslateLibreTranslate(to, from, query)
+	watson, _ := TranslateWatson(to, from, query)
+	mymemory, _ := TranslateMyMemory(to, from, query)
+	yandex, _ := TranslateYandex(to, from, query)
+	deepl, _ := TranslateDeepl(to, from, query)
+	return google.OutputText, reverso.OutputText, libretranslate.OutputText, watson.OutputText, mymemory.OutputText, yandex.OutputText, deepl.OutputText
 }
