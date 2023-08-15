@@ -8,5 +8,4 @@
 - Alternative words
 - Dictionary
 - Use the TranslateServerWebui API instead of scraping Google Translate Legacy 
-- Bing Translate
 - ICIBA

@@ -1,6 +1,7 @@
 package utils
 
-func LangListBing(listType string) []List {
+func LangListDuckDuckGo(listType string) []List {
+	// DuckDuckGo is just Bing translate but easier to scrape :)
 	// Converted json of https://github.com/plainheart/bing-translate-api/blob/master/src/lang.json to this format
 	var ListData = []List{
 		List{

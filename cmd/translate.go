@@ -57,6 +57,14 @@ var translateCmd = &cobra.Command{
 			} else {
 				fmt.Println(utils.TranslateYandex(dest, source, query))
 			}
+		} else if engine == "duckduckgo" {
+			if langlist == "sl" {
+				fmt.Println(utils.LangListDuckDuckGo(langlist))
+			} else if langlist == "tl" {
+				fmt.Println(utils.LangListDuckDuckGo(langlist))
+			} else {
+				fmt.Println(utils.TranslateDuckDuckGo(dest, source, query))
+			}
 		} else if engine == "mymemory" {
 			if langlist == "sl" {
 				fmt.Println(utils.LangListMyMemory(langlist))

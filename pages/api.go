@@ -25,6 +25,8 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 		data = utils.LangListYandex("sl")
 	} else if engine == "mymemory" {
 		data = utils.LangListMyMemory("sl")
+	} else if engine == "duckduckgo" {
+		data = utils.LangListDuckDuckGo("sl")
 	}
 	return c.JSON(data)
 }
@@ -48,6 +50,8 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 		data = utils.LangListYandex("tl")
 	} else if engine == "mymemory" {
 		data = utils.LangListMyMemory("tl")
+	} else if engine == "duckduckgo" {
+		data = utils.LangListDuckDuckGo("tl")
 	}
 	return c.JSON(data)
 }
@@ -96,6 +100,8 @@ func HandleTranslate(c *fiber.Ctx) error {
 		data, err = utils.TranslateYandex(to, from, text)
 	} else if engine == "mymemory" {
 		data, err = utils.TranslateMyMemory(to, from, text)
+	} else if engine == "duckduckgo" {
+		data, err = utils.TranslateDuckDuckGo(to, from, text)
 	}
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())

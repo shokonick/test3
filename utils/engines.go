@@ -248,7 +248,33 @@ func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	langout.OutputText = ans
 	return langout, nil
 }
-func TranslateAll(to string, from string, query string) (string, string, string, string, string, string, string) {
+func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) {
+	var ToValid bool
+	var FromValid bool
+	for _, v := range LangListDuckDuckGo("sl") {
+		if v.Id == to {
+			ToValid = true
+		}
+		if v.Id == from {
+			FromValid = true
+		}
+		if FromValid == true && ToValid == true {
+			break
+		}
+	}
+	if ToValid != true {
+		return LangOut{}, errors.New("Target language code invalid")
+	}
+	if FromValid != true {
+		return LangOut{}, errors.New("Source language code invalid")
+	}
+	duckDuckGoOut := PostRequest("https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to="+to+"&from="+from, []byte(query))
+	gjsonArr := duckDuckGoOut.Get("translated").Array()
+	var langout LangOut
+	langout.OutputText = gjsonArr[0].String()
+	return langout, nil
+}
+func TranslateAll(to string, from string, query string) (string, string, string, string, string, string, string, string) {
 	reverso, _ := TranslateReverso(to, from, query)
 	google, _ := TranslateGoogle(to, from, query)
 	libretranslate, _ := TranslateLibreTranslate(to, from, query)
@@ -256,5 +282,6 @@ func TranslateAll(to string, from string, query string) (string, string, string,
 	mymemory, _ := TranslateMyMemory(to, from, query)
 	yandex, _ := TranslateYandex(to, from, query)
 	deepl, _ := TranslateDeepl(to, from, query)
-	return google.OutputText, reverso.OutputText, libretranslate.OutputText, watson.OutputText, mymemory.OutputText, yandex.OutputText, deepl.OutputText
+	duckduckgo, _ := TranslateDuckDuckGo(to, from, query)
+	return google.OutputText, reverso.OutputText, libretranslate.OutputText, watson.OutputText, mymemory.OutputText, yandex.OutputText, deepl.OutputText, duckduckgo.OutputText
 }
