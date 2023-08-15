@@ -15,7 +15,7 @@ var imgtxtCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		text, err := utils.ImgTxt(file)
 		if err != nil {
-			fmt.Println("Failed to convert image to text")
+			fmt.Println("Failed to convert image to text: ", err)
 		} else {
 			fmt.Println(text)
 		}
