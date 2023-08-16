@@ -136,6 +136,9 @@ func TranslateLibreTranslate(to string, from string, query string) (LangOut, err
 	langout.Engine = "libretranslate"
 	langout.SourceLang = FromOrig
 	langout.TargetLang = ToOrig
+	if from == "auto" {
+		langout.AutoDetect, _ = AutoDetectLibreTranslate(query)
+	}
 	return langout, nil
 }
 func TranslateWatson(to string, from string, query string) (LangOut, error) {
@@ -160,10 +163,14 @@ func TranslateWatson(to string, from string, query string) (LangOut, error) {
 	if FromValid != true {
 		return LangOut{}, errors.New("Source language code invalid")
 	}
+	var langout LangOut
+	if from == "auto" {
+		langout.AutoDetect, _ = AutoDetectWatson(query)
+		from = langout.AutoDetect
+	}
 	json := []byte(`{"text":"` + query + `","source":"` + from + `","target":"` + to + `"}`)
 	watsonOut := PostRequest("https://www.ibm.com/demos/live/watson-language-translator/api/translate/text", json)
 	gjsonArr := watsonOut.Get("payload.translations.0.translation").Array()
-	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
 	langout.Engine = "watson"
 	langout.SourceLang = FromOrig
@@ -306,13 +313,22 @@ func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) 
 	if FromValid != true {
 		return LangOut{}, errors.New("Source language code invalid")
 	}
-	duckDuckGoOut := PostRequest("https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to="+to+"&from="+from, []byte(query))
+	var url string
+	if from == "auto" {
+		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to="+to
+	} else {
+		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to="+to+"&from="+from
+	}
+	duckDuckGoOut := PostRequest(url, []byte(query))
 	gjsonArr := duckDuckGoOut.Get("translated").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
 	langout.Engine = "duckduckgo"
 	langout.SourceLang = FromOrig
 	langout.TargetLang = ToOrig
+	if from == "auto" {
+		langout.AutoDetect = duckDuckGoOut.Get("detected_language").String()
+	}
 	return langout, nil
 }
 func TranslateAll(to string, from string, query string) ([]LangOut) {

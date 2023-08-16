@@ -517,5 +517,12 @@ func LangListDuckDuckGo(listType string) []List {
 			Name: "Zulu",
 		},
 	}
+	if listType == "sl" {
+		auto := List{
+			Id:   "auto",
+			Name: "Detect Language",
+		}
+		ListData = append(ListData, auto)
+	}
 	return ListData
 }
