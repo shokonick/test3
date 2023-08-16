@@ -11,13 +11,16 @@ import (
 )
 
 type LangOut struct {
-	OutputText string `json:"translated-text"`
+	Engine	string	`json:"engine"`
 	AutoDetect string `json:"detected"`
+	OutputText string `json:"translated-text"`
 	SourceLang string `json:"source_language"`
 	TargetLang string `json:"target_language"`
 }
 
 func TranslateGoogle(to string, from string, text string) (LangOut, error) {
+	ToOrig := to
+	FromOrig := from
 	// For some reason google uses no for norwegian instead of nb like the rest of the translators. This is for the All function primarily
 	if to == "nb" {
 		to = "no"
@@ -65,9 +68,14 @@ func TranslateGoogle(to string, from string, text string) (LangOut, error) {
 	sc.Visit(url)
 	var langout LangOut
 	langout.OutputText = answer
+	langout.Engine = "google"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
 func TranslateReverso(to string, from string, query string) (LangOut, error) {
+	ToOrig := to
+	FromOrig := from
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListReverso("sl") {
@@ -92,9 +100,14 @@ func TranslateReverso(to string, from string, query string) (LangOut, error) {
 	gjsonArr := reversoOut.Get("translation").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
+	langout.Engine = "reverso"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
 func TranslateLibreTranslate(to string, from string, query string) (LangOut, error) {
+	ToOrig := to
+	FromOrig := from
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListLibreTranslate("sl") {
@@ -120,9 +133,14 @@ func TranslateLibreTranslate(to string, from string, query string) (LangOut, err
 	gjsonArr := libreTranslateOut.Get("translatedText").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
+	langout.Engine = "libretranslate"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
 func TranslateWatson(to string, from string, query string) (LangOut, error) {
+	FromOrig := from
+	ToOrig := to
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListWatson("sl") {
@@ -147,9 +165,14 @@ func TranslateWatson(to string, from string, query string) (LangOut, error) {
 	gjsonArr := watsonOut.Get("payload.translations.0.translation").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
+	langout.Engine = "watson"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
 func TranslateMyMemory(to string, from string, text string) (LangOut, error) {
+	FromOrig := from
+	ToOrig := to
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListMyMemory("sl") {
@@ -179,9 +202,14 @@ func TranslateMyMemory(to string, from string, text string) (LangOut, error) {
 	gjsonArr := myMemoryOut.Get("responseData.translatedText").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
+	langout.Engine = "mymemory"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
 func TranslateYandex(to string, from string, text string) (LangOut, error) {
+	FromOrig := from
+	ToOrig := to
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListYandex("sl") {
@@ -216,9 +244,14 @@ func TranslateYandex(to string, from string, text string) (LangOut, error) {
 	gjsonArr := yandexOut.Get("text.0").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
+	langout.Engine = "yandex"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
 func TranslateDeepl(to string, from string, text string) (LangOut, error) {
+	FromOrig := from
+	ToOrig := to
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListDeepl("sl") {
@@ -246,9 +279,14 @@ func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	ans := answer1["data"].(string)
 	var langout LangOut
 	langout.OutputText = ans
+	langout.Engine = "deepl"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
 func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) {
+	FromOrig := from
+	ToOrig := to
 	var ToValid bool
 	var FromValid bool
 	for _, v := range LangListDuckDuckGo("sl") {
@@ -272,9 +310,12 @@ func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) 
 	gjsonArr := duckDuckGoOut.Get("translated").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
+	langout.Engine = "duckduckgo"
+	langout.SourceLang = FromOrig
+	langout.TargetLang = ToOrig
 	return langout, nil
 }
-func TranslateAll(to string, from string, query string) (string, string, string, string, string, string, string, string) {
+func TranslateAll(to string, from string, query string) ([]LangOut) {
 	reverso, _ := TranslateReverso(to, from, query)
 	google, _ := TranslateGoogle(to, from, query)
 	libretranslate, _ := TranslateLibreTranslate(to, from, query)
@@ -283,5 +324,7 @@ func TranslateAll(to string, from string, query string) (string, string, string,
 	yandex, _ := TranslateYandex(to, from, query)
 	deepl, _ := TranslateDeepl(to, from, query)
 	duckduckgo, _ := TranslateDuckDuckGo(to, from, query)
-	return google.OutputText, reverso.OutputText, libretranslate.OutputText, watson.OutputText, mymemory.OutputText, yandex.OutputText, deepl.OutputText, duckduckgo.OutputText
+
+	langout := []LangOut{reverso, google, libretranslate, watson, mymemory, yandex, deepl, duckduckgo}
+	return langout
 }

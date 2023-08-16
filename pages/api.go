@@ -67,14 +67,14 @@ func HandleTTS(c *fiber.Ctx) error {
 	} else if lang == "" {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
-	var data string
+	var data []byte
 	if engine == "google" {
 		data = utils.TTSGoogle(lang, text)
 	} else if engine == "reverso" {
 		data = utils.TTSReverso(lang, text)
 	}
 	c.Set("Content-Type", "audio/mpeg")
-	return c.Send([]byte(data))
+	return c.Send(data)
 }
 func HandleTranslate(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
@@ -84,8 +84,9 @@ func HandleTranslate(c *fiber.Ctx) error {
 	if engine == "" && from == "" && to == "" && text == ""{
 		return fiber.NewError(fiber.StatusBadRequest, "from, to, engine, text are required query strings.")
 	}
-	var data utils.LangOut
 	var err error
+	var data utils.LangOut
+	var dataarr []utils.LangOut
 	if engine == "google" {
 		data, err = utils.TranslateGoogle(to, from, text)
 	} else if engine == "libre" {
@@ -102,11 +103,15 @@ func HandleTranslate(c *fiber.Ctx) error {
 		data, err = utils.TranslateMyMemory(to, from, text)
 	} else if engine == "duckduckgo" {
 		data, err = utils.TranslateDuckDuckGo(to, from, text)
+	} else if engine == "all" {
+		dataarr = utils.TranslateAll(to, from, text)
 	}
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
-	data.SourceLang = from
-	data.TargetLang = to
-	return c.JSON(data)
+	if engine == "all" {
+		return c.JSON(dataarr)
+	} else {
+		return c.JSON(data)
+	}
 }

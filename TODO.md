@@ -1,11 +1,10 @@
 # TODO
 - Create a web interface
 - Proper Error handling for requests.go
-- Use struct instead of string in many places
 - Tell which language Detect Language chose
-- Add speech to text with Vosk perhaps
 - Finish simplytranslate-py compatible API for translations
 - Alternative words
 - Dictionary
 - Use the TranslateServerWebui API instead of scraping Google Translate Legacy 
 - ICIBA
+- Add speech to text with Vosk perhaps
