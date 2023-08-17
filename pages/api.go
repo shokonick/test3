@@ -81,7 +81,7 @@ func HandleTranslate(c *fiber.Ctx) error {
 	from := utils.Sanitize(c.Query("from"), "alpha")
 	to := utils.Sanitize(c.Query("to"), "alpha")
 	text := c.Query("text")
-	if engine == "" && from == "" && to == "" && text == ""{
+	if engine == "" && from == "" && to == "" && text == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "from, to, engine, text are required query strings.")
 	}
 	var err error

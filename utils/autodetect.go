@@ -1,4 +1,5 @@
 package utils
+
 func AutoDetectWatson(query string) (string, error) {
 	json := []byte(`{"text":"` + query + `"}`)
 	watsonOut := PostRequest("https://www.ibm.com/demos/live/watson-language-translator/api/translate/detect", json)

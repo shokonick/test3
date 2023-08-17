@@ -11,7 +11,7 @@ import (
 )
 
 type LangOut struct {
-	Engine	string	`json:"engine"`
+	Engine     string `json:"engine"`
 	AutoDetect string `json:"detected"`
 	OutputText string `json:"translated-text"`
 	SourceLang string `json:"source_language"`
@@ -287,6 +287,9 @@ func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	var langout LangOut
 	langout.OutputText = ans
 	langout.Engine = "deepl"
+	if from == "auto" {
+		langout.AutoDetect = strings.ToLower(answer1["detected_lang"].(string))
+	}
 	langout.SourceLang = FromOrig
 	langout.TargetLang = ToOrig
 	return langout, nil
@@ -315,9 +318,9 @@ func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) 
 	}
 	var url string
 	if from == "auto" {
-		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to="+to
+		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to=" + to
 	} else {
-		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to="+to+"&from="+from
+		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to=" + to + "&from=" + from
 	}
 	duckDuckGoOut := PostRequest(url, []byte(query))
 	gjsonArr := duckDuckGoOut.Get("translated").Array()
@@ -331,7 +334,7 @@ func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) 
 	}
 	return langout, nil
 }
-func TranslateAll(to string, from string, query string) ([]LangOut) {
+func TranslateAll(to string, from string, query string) []LangOut {
 	reverso, _ := TranslateReverso(to, from, query)
 	google, _ := TranslateGoogle(to, from, query)
 	libretranslate, _ := TranslateLibreTranslate(to, from, query)
