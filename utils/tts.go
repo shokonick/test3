@@ -13,7 +13,7 @@ type ReversoTTS struct {
 	Voice string
 }
 
-func TTSGoogle(lang string, text string) []byte {
+func TTSGoogle(lang string, text string) ([]byte, error) {
 	type Options struct {
 		Lang   string `url:"tl"`
 		Text   string `url:"q"`
@@ -29,11 +29,12 @@ func TTSGoogle(lang string, text string) []byte {
 		ToString(&file).
 		Fetch(context.Background())
 	if err != nil {
-		file = ""
+		return []byte(""), err
 	}
-	return []byte(file)
+	return []byte(file), nil
 }
-func TTSReverso(lang string, text string) []byte {
+
+func TTSReverso(lang string, text string) ([]byte, error) {
 	var TTSData = []ReversoTTS{
 		// http://voice.reverso.net/RestPronunciation.svc/v1/output=json/GetAvailableVoices with randomized deduplication
 		ReversoTTS{
@@ -147,7 +148,7 @@ func TTSReverso(lang string, text string) []byte {
 		UserAgent(UserAgent).
 		Fetch(context.Background())
 	if err != nil {
-		file = ""
+		return []byte(""), err
 	}
-	return []byte(file)
+	return []byte(file), nil
 }

@@ -8,50 +8,22 @@ import (
 func HandleSourceLanguages(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
-		return c.SendStatus(fiber.StatusBadRequest)
+		return fiber.NewError(fiber.StatusBadRequest, "engine is a required query string.")
 	}
-	var data []utils.List
-	if engine == "google" {
-		data = utils.LangListGoogle("sl")
-	} else if engine == "libre" {
-		data = utils.LangListLibreTranslate("sl")
-	} else if engine == "reverso" {
-		data = utils.LangListReverso("sl")
-	} else if engine == "deepl" {
-		data = utils.LangListDeepl("sl")
-	} else if engine == "watson" {
-		data = utils.LangListWatson("sl")
-	} else if engine == "yandex" {
-		data = utils.LangListYandex("sl")
-	} else if engine == "mymemory" {
-		data = utils.LangListMyMemory("sl")
-	} else if engine == "duckduckgo" {
-		data = utils.LangListDuckDuckGo("sl")
+	data, err := utils.LangList(engine, "sl")
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(data)
 }
 func HandleTargetLanguages(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
-		return c.SendStatus(fiber.StatusBadRequest)
+		return fiber.NewError(fiber.StatusBadRequest, "engine is a required query string.")
 	}
-	var data []utils.List
-	if engine == "google" {
-		data = utils.LangListGoogle("tl")
-	} else if engine == "libre" {
-		data = utils.LangListLibreTranslate("tl")
-	} else if engine == "reverso" {
-		data = utils.LangListReverso("tl")
-	} else if engine == "deepl" {
-		data = utils.LangListDeepl("tl")
-	} else if engine == "watson" {
-		data = utils.LangListWatson("tl")
-	} else if engine == "yandex" {
-		data = utils.LangListYandex("tl")
-	} else if engine == "mymemory" {
-		data = utils.LangListMyMemory("tl")
-	} else if engine == "duckduckgo" {
-		data = utils.LangListDuckDuckGo("tl")
+	data, err := utils.LangList(engine, "tl")
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(data)
 }
@@ -59,19 +31,12 @@ func HandleTTS(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	lang := utils.Sanitize(c.Query("lang"), "alpha")
 	text := c.Query("text")
-	// Why does go not have an andor statement :(
-	if engine == "" {
-		return c.SendStatus(fiber.StatusBadRequest)
-	} else if text == "" {
-		return c.SendStatus(fiber.StatusBadRequest)
-	} else if lang == "" {
-		return c.SendStatus(fiber.StatusBadRequest)
+	if engine == "" || text == "" || lang == "" {
+		return fiber.NewError(fiber.StatusBadRequest, "engine, lang, text are required query strings.")
 	}
-	var data []byte
-	if engine == "google" {
-		data = utils.TTSGoogle(lang, text)
-	} else if engine == "reverso" {
-		data = utils.TTSReverso(lang, text)
+	data, err := utils.TTS(engine, lang, text)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 	c.Set("Content-Type", "audio/mpeg")
 	return c.Send(data)
@@ -81,33 +46,19 @@ func HandleTranslate(c *fiber.Ctx) error {
 	from := utils.Sanitize(c.Query("from"), "alpha")
 	to := utils.Sanitize(c.Query("to"), "alpha")
 	text := c.Query("text")
-	if engine == "" && from == "" && to == "" && text == "" {
+	if engine == "" || from == "" || to == "" || text == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "from, to, engine, text are required query strings.")
 	}
-	var err error
-	var data utils.LangOut
 	var dataarr []utils.LangOut
-	if engine == "google" {
-		data, err = utils.TranslateGoogle(to, from, text)
-	} else if engine == "libre" {
-		data, err = utils.TranslateLibreTranslate(to, from, text)
-	} else if engine == "reverso" {
-		data, err = utils.TranslateReverso(to, from, text)
-	} else if engine == "deepl" {
-		data, err = utils.TranslateDeepl(to, from, text)
-	} else if engine == "watson" {
-		data, err = utils.TranslateWatson(to, from, text)
-	} else if engine == "yandex" {
-		data, err = utils.TranslateYandex(to, from, text)
-	} else if engine == "mymemory" {
-		data, err = utils.TranslateMyMemory(to, from, text)
-	} else if engine == "duckduckgo" {
-		data, err = utils.TranslateDuckDuckGo(to, from, text)
-	} else if engine == "all" {
+	var data	utils.LangOut
+	var err		error
+	if engine == "all" {
 		dataarr = utils.TranslateAll(to, from, text)
-	}
-	if err != nil {
-		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	} else {
+		data, err = utils.Translate(engine, to, from, text)
+		if err != nil {
+			return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+		}
 	}
 	if engine == "all" {
 		return c.JSON(dataarr)
