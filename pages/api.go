@@ -5,6 +5,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// HandleSourceLanguages godoc
+//	@Summary	Show list of available source languages for engine
+//	@Param		engine	query		string	true	"Engine name"
+//	@Success	200		{object}	utils.List
+//	@Router	/api/source_languages [get]
 func HandleSourceLanguages(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
@@ -17,6 +22,11 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 	return c.JSON(data)
 }
 
+// HandleTargetLanguages godoc
+//	@Summary	Show list of available target languages for engine
+//	@Param		engine	query		string	true	"Engine name"
+//	@Success	200		{object}	utils.List
+//	@Router	/api/target_languages [get]
 func HandleTargetLanguages(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
@@ -29,6 +39,12 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 	return c.JSON(data)
 }
 
+// HandleTTS godoc
+//	@Summary	Get Text-To-Speech for specified language using specified engine
+//	@Param		engine	query		string	true	"Engine name"
+//	@Param		lang query		string	true	"Language being TTS'd"
+//	@Param		text query		string	true	"Text being TTS'd"
+//	@Router	/api/tts [get]
 func HandleTTS(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	lang := utils.Sanitize(c.Query("lang"), "alpha")
@@ -44,6 +60,14 @@ func HandleTTS(c *fiber.Ctx) error {
 	return c.Send(data)
 }
 
+// HandleTranslate godoc
+//	@Summary	Translate text
+//	@Param		engine	query		string	true	"Engine name"
+//	@Param		from query		string	true	"Source language"
+//	@Param		to query		string	true	"Target language"
+//	@Param		text query		string	true	"Text being translated"
+//	@Success	200		{object}	utils.LangOut
+//	@Router	/api/translate [get]
 func HandleTranslate(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	from := utils.Sanitize(c.Query("from"), "alpha")

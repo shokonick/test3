@@ -18,6 +18,11 @@ I'm initially focusing on the api and engines, but eventually Mozhi will have a 
 ## Installation
 Just `go build` and you're done :D
 
+## API Docs
+Mozhi makes use of swagger (with the swagger fiber middleware) to manage the documentation of the API.
+
+You can find it in /api/swagger of any instance.
+
 ## Features
 - An all mode where the responses of all supported engines will be shown.
 - Autodetect which will show the language that was detected

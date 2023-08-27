@@ -1,7 +1,7 @@
 # TODO
 - Create a web interface
 - Make CLI usable
-- API Docs
+- CI/CD
 - Support for disabling engines
 - Support for changing LibreTranslate instance
 - Add actual explanations for CLI arguments

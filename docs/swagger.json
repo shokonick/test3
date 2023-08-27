@@ -1,0 +1,157 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/source_languages": {
+            "get": {
+                "summary": "Show list of available source languages for engine",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Engine name",
+                        "name": "engine",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.List"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/target_languages": {
+            "get": {
+                "summary": "Show list of available target languages for engine",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Engine name",
+                        "name": "engine",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.List"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/translate": {
+            "get": {
+                "summary": "Translate text",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Engine name",
+                        "name": "engine",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Source language",
+                        "name": "from",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Target language",
+                        "name": "to",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Text being translated",
+                        "name": "text",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.LangOut"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tts": {
+            "get": {
+                "summary": "Get Text-To-Speech for specified language using specified engine",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Engine name",
+                        "name": "engine",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language being TTS'd",
+                        "name": "lang",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Text being TTS'd",
+                        "name": "text",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "utils.LangOut": {
+            "type": "object",
+            "properties": {
+                "detected": {
+                    "type": "string"
+                },
+                "engine": {
+                    "type": "string"
+                },
+                "source_language": {
+                    "type": "string"
+                },
+                "target_language": {
+                    "type": "string"
+                },
+                "translated-text": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.List": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
