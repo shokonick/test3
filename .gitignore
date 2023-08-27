@@ -18,8 +18,11 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# Simplytranslate binary (on linux and mac)
+# Mozhi binary (on linux and mac)
 /mozhi
+
+# Auto-generated Documentation 
+/docs
 
 # Go workspace file
 go.work
