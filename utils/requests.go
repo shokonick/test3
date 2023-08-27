@@ -2,10 +2,11 @@ package utils
 
 import (
 	"bytes"
-	"github.com/tidwall/gjson"
 	"io"
 	"net/http"
 	"os"
+
+	"github.com/tidwall/gjson"
 )
 
 func PostRequest(url string, data []byte) gjson.Result {
@@ -19,7 +20,7 @@ func PostRequest(url string, data []byte) gjson.Result {
 	if !ok {
 		UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 	}
-	//r.Header.Set("Accept", "application/vnd.github.v3+json")
+	// r.Header.Set("Accept", "application/vnd.github.v3+json")
 	r.Header.Set("Content-Type", "application/json")
 	r.Header.Set("User-Agent", UserAgent)
 
@@ -39,6 +40,7 @@ func PostRequest(url string, data []byte) gjson.Result {
 
 	return jsonified
 }
+
 func GetRequest(url string) gjson.Result {
 	r, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -49,7 +51,7 @@ func GetRequest(url string) gjson.Result {
 	if !ok {
 		UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 	}
-	//r.Header.Set("Content-Type", "application/json")
+	// r.Header.Set("Content-Type", "application/json")
 	r.Header.Set("User-Agent", UserAgent)
 
 	client := &http.Client{}

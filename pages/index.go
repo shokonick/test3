@@ -1,10 +1,12 @@
 package pages
 
 import (
-	"codeberg.org/aryak/mozhi/utils"
 	"fmt"
-	"github.com/gofiber/fiber/v2"
 	"runtime"
+
+	"codeberg.org/aryak/mozhi/utils"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func HandleIndex(c *fiber.Ctx) error {

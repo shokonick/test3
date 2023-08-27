@@ -1,16 +1,20 @@
 package cmd
 
 import (
-	"codeberg.org/aryak/mozhi/utils"
 	"fmt"
+
+	"codeberg.org/aryak/mozhi/utils"
+
 	"github.com/spf13/cobra"
 )
 
-var engine string
-var query string
-var source string
-var dest string
-var langlist string
+var (
+	engine   string
+	query    string
+	source   string
+	dest     string
+	langlist string
+)
 
 var translateCmd = &cobra.Command{
 	Use:   "translate",
@@ -19,7 +23,7 @@ var translateCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		if langlist == "sl" || langlist == "tl" {
 			fmt.Println(utils.LangList(engine, langlist))
-		} else if engine == "all"{
+		} else if engine == "all" {
 			fmt.Println(utils.TranslateAll(dest, source, query))
 		} else {
 			fmt.Println(utils.Translate(engine, dest, source, query))

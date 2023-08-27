@@ -38,7 +38,7 @@ func LangList(engine string, listType string) ([]List, error) {
 	} else if engine == "duckduckgo" {
 		data = LangListDuckDuckGo("sl")
 	} else {
-		return []List{} , errors.New("Engine does not exist.")
+		return []List{}, errors.New("Engine does not exist.")
 	}
 	return data, nil
 }

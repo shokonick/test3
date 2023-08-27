@@ -2,12 +2,13 @@ package utils
 
 import (
 	"errors"
+	"os"
+	"strings"
+
 	"github.com/OwO-Network/gdeeplx"
 	"github.com/gocolly/colly"
 	"github.com/google/go-querystring/query"
 	"github.com/google/uuid"
-	"os"
-	"strings"
 )
 
 func TranslateGoogle(to string, from string, text string) (LangOut, error) {
@@ -65,6 +66,7 @@ func TranslateGoogle(to string, from string, text string) (LangOut, error) {
 	langout.TargetLang = ToOrig
 	return langout, nil
 }
+
 func TranslateReverso(to string, from string, query string) (LangOut, error) {
 	ToOrig := to
 	FromOrig := from
@@ -97,6 +99,7 @@ func TranslateReverso(to string, from string, query string) (LangOut, error) {
 	langout.TargetLang = ToOrig
 	return langout, nil
 }
+
 func TranslateLibreTranslate(to string, from string, query string) (LangOut, error) {
 	ToOrig := to
 	FromOrig := from
@@ -133,6 +136,7 @@ func TranslateLibreTranslate(to string, from string, query string) (LangOut, err
 	}
 	return langout, nil
 }
+
 func TranslateWatson(to string, from string, query string) (LangOut, error) {
 	FromOrig := from
 	ToOrig := to
@@ -169,6 +173,7 @@ func TranslateWatson(to string, from string, query string) (LangOut, error) {
 	langout.TargetLang = ToOrig
 	return langout, nil
 }
+
 func TranslateMyMemory(to string, from string, text string) (LangOut, error) {
 	FromOrig := from
 	ToOrig := to
@@ -206,6 +211,7 @@ func TranslateMyMemory(to string, from string, text string) (LangOut, error) {
 	langout.TargetLang = ToOrig
 	return langout, nil
 }
+
 func TranslateYandex(to string, from string, text string) (LangOut, error) {
 	FromOrig := from
 	ToOrig := to
@@ -248,6 +254,7 @@ func TranslateYandex(to string, from string, text string) (LangOut, error) {
 	langout.TargetLang = ToOrig
 	return langout, nil
 }
+
 func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	FromOrig := from
 	ToOrig := to
@@ -286,6 +293,7 @@ func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	langout.TargetLang = ToOrig
 	return langout, nil
 }
+
 func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) {
 	FromOrig := from
 	ToOrig := to
@@ -326,6 +334,7 @@ func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) 
 	}
 	return langout, nil
 }
+
 func TranslateAll(to string, from string, query string) []LangOut {
 	reverso, _ := TranslateReverso(to, from, query)
 	google, _ := TranslateGoogle(to, from, query)

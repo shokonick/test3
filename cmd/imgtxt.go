@@ -1,8 +1,10 @@
 package cmd
 
 import (
-	"codeberg.org/aryak/mozhi/utils"
 	"fmt"
+
+	"codeberg.org/aryak/mozhi/utils"
+
 	"github.com/spf13/cobra"
 )
 

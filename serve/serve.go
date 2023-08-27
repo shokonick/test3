@@ -87,7 +87,7 @@ func Serve(port string) {
 	app.Static("/robots.txt", "./public/robots.txt", staticConfig)
 	app.Static("/favicon.ico", "./public/assets/favicon.ico", staticConfig)
 	app.Static("/logo.svg", "./public/assets/logo.svg", staticConfig)
-	//app.Get("/about", pages.HandleAbout)
+	// app.Get("/about", pages.HandleAbout)
 
 	api := app.Group("/api")
 	v1 := api.Group("/v1")

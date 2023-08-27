@@ -16,6 +16,7 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 	}
 	return c.JSON(data)
 }
+
 func HandleTargetLanguages(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
@@ -27,6 +28,7 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 	}
 	return c.JSON(data)
 }
+
 func HandleTTS(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	lang := utils.Sanitize(c.Query("lang"), "alpha")
@@ -41,6 +43,7 @@ func HandleTTS(c *fiber.Ctx) error {
 	c.Set("Content-Type", "audio/mpeg")
 	return c.Send(data)
 }
+
 func HandleTranslate(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	from := utils.Sanitize(c.Query("from"), "alpha")
@@ -50,8 +53,8 @@ func HandleTranslate(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "from, to, engine, text are required query strings.")
 	}
 	var dataarr []utils.LangOut
-	var data	utils.LangOut
-	var err		error
+	var data utils.LangOut
+	var err error
 	if engine == "all" {
 		dataarr = utils.TranslateAll(to, from, text)
 	} else {
