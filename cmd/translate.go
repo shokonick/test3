@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/ktr0731/go-fuzzyfinder"
 	"codeberg.org/aryak/mozhi/utils"
 
 	"github.com/spf13/cobra"
@@ -22,7 +22,21 @@ var translateCmd = &cobra.Command{
 	Long:  `Translate.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if langlist == "sl" || langlist == "tl" {
-			fmt.Println(utils.LangList(engine, langlist))
+			list, err := utils.LangList(engine, langlist)
+			if err != nil {
+				fmt.Println(err)
+			}
+			idxs, err := fuzzyfinder.FindMulti(
+				list,
+				func(i int) string {
+					return list[i].Name
+				})
+			if err != nil {
+				fmt.Println(err)
+			}
+			for _, idx := range idxs {
+				fmt.Println("Selected Language:", list[idx].Id)
+			}
 		} else if engine == "all" {
 			fmt.Println(utils.TranslateAll(dest, source, query))
 		} else {

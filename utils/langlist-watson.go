@@ -232,12 +232,13 @@ func LangListWatson(listType string) []List {
 			Name: "Welsh",
 		},
 	}
+	var ListD []List
 	if listType == "sl" {
-		auto := List{
+		auto := []List{{
 			Id:   "auto",
 			Name: "Detect Language",
-		}
-		ListData = append(ListData, auto)
+		}}
+		ListD = append(append([]List{}, auto...), ListData...)
 	}
-	return ListData
+	return ListD
 }

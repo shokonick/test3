@@ -71,12 +71,13 @@ func LangListLibreTranslate(listType string) []List {
 			Name: "Vietnamese",
 		},
 	}
+	var ListD []List
 	if listType == "sl" {
-		auto := List{
+		auto := []List{{
 			Id:   "auto",
 			Name: "Detect Language",
-		}
-		ListData = append(ListData, auto)
+		}}
+		ListD = append(append([]List{}, auto...), ListData...)
 	}
-	return ListData
+	return ListD
 }
