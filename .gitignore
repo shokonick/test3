@@ -21,9 +21,6 @@
 # Mozhi binary (on linux and mac)
 /mozhi
 
-# Auto-generated Documentation 
-/docs
-
 # Go workspace file
 go.work
 
