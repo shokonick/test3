@@ -15,8 +15,13 @@ I'm initially focusing on the api and engines, but eventually Mozhi will have a 
 - MyMemory
 - DuckDuckGo (almost 1-1 with Bing Translate)
 
-## Installation
-Just `go build` and you're done :D
+## Building
+```
+go mod download
+go install github.com/swaggo/swag/cmd/swag@latest
+swag init
+go build -o mozhi
+```
 
 ## API Docs
 Mozhi makes use of swagger (with the swagger fiber middleware) to manage the documentation of the API.
