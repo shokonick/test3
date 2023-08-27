@@ -21,7 +21,6 @@ Just `go build` and you're done :D
 ## Features
 - An all mode where the responses of all supported engines will be shown.
 - Autodetect which will show the language that was detected
-- Tesseract based image recognition (it isn't that good to be fair but it works nontheless)
 - Text-To-Speech for multiple engines
 - A good API (subjective :P)
 - All the stuff you expect from a translation utility :)
