@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"codeberg.org/aryak/simplytranslate/utils"
+	"codeberg.org/aryak/mozhi/utils"
 	"fmt"
 	"github.com/spf13/cobra"
 )
@@ -90,11 +90,11 @@ var translateCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(translateCmd)
 
-	translateCmd.Flags().StringVarP(&engine, "engine", "e", "", "The source SimplyTranslate will listen to. Defaults to 3000, and overrides the SIMPLYTRANSLATE_source environment variable.")
-	translateCmd.Flags().StringVarP(&source, "source", "s", "", "The source SimplyTranslate will listen to. Defaults to 3000, and overrides the SIMPLYTRANSLATE_source environment variable.")
-	translateCmd.Flags().StringVarP(&dest, "dest", "t", "", "The dest SimplyTranslate will listen to. Defaults to 3000, and overrides the SIMPLYTRANSLATE_dest environment variable.")
-	translateCmd.Flags().StringVarP(&query, "query", "q", "", "The query SimplyTranslate will listen to. Defaults to 3000, and overrides the SIMPLYTRANSLATE_query environment variable.")
-	translateCmd.Flags().StringVarP(&langlist, "langlist", "l", "", "The query SimplyTranslate will listen to. Defaults to 3000, and overrides the SIMPLYTRANSLATE_query environment variable.")
+	translateCmd.Flags().StringVarP(&engine, "engine", "e", "", "The source Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_source environment variable.")
+	translateCmd.Flags().StringVarP(&source, "source", "s", "", "The source Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_source environment variable.")
+	translateCmd.Flags().StringVarP(&dest, "dest", "t", "", "The dest Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_dest environment variable.")
+	translateCmd.Flags().StringVarP(&query, "query", "q", "", "The query Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_query environment variable.")
+	translateCmd.Flags().StringVarP(&langlist, "langlist", "l", "", "The query Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_query environment variable.")
 
 	engine = translateCmd.Flag("engine").Value.String()
 	dest = translateCmd.Flag("dest").Value.String()

@@ -47,7 +47,7 @@ func TranslateGoogle(to string, from string, text string) (LangOut, error) {
 		return LangOut{}, errors.New("Source language code invalid")
 	}
 
-	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
+	UserAgent, ok := os.LookupEnv("MOZHI_USER_AGENT")
 	if !ok {
 		UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 	}

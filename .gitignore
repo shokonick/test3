@@ -19,7 +19,7 @@
 # vendor/
 
 # Simplytranslate binary (on linux and mac)
-/simplytranslate
+/mozhi
 
 # Go workspace file
 go.work

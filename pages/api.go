@@ -1,7 +1,7 @@
 package pages
 
 import (
-	"codeberg.org/aryak/simplytranslate/utils"
+	"codeberg.org/aryak/mozhi/utils"
 	"github.com/gofiber/fiber/v2"
 )
 

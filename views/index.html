@@ -1,7 +1,7 @@
 {{template "header" .}}
 
 <main>
-  <h2>SimplyTranslate</h2>
+  <h2>Mozhi</h2>
   <h3>Translate</h3>
   
 	<form action="/" method="get">
@@ -16,9 +16,9 @@
 	  <input type="submit" value="Submit">
 	</form>
   <h3>Info</h3>
-  {{ if eq .version "unknown, please build with Go 1.13+ or use Git"}} SimplyTranslate
-  version: <code>unknown</code> {{ else }} SimplyTranslate version:
-  <a href="https://codeberg.org/aryak/simplytranslate/commit/{{ .version}}"
+  {{ if eq .version "unknown, please build with Go 1.13+ or use Git"}} Mozhi
+  version: <code>unknown</code> {{ else }} Mozhi version:
+  <a href="https://codeberg.org/aryak/mozhi/commit/{{ .version}}"
     ><code>{{ .version}}</code></a
   >
   {{ end }}

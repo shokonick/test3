@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "simplytranslate",
+	Use:   "mozhi",
 	Short: "An alternative front-end for many Translation Engines.",
 	Long:  "An alternative front-end for many Translation Engines, rewritten in Gofiber+colly by AryaK.",
 	Run: func(cmd *cobra.Command, args []string) {

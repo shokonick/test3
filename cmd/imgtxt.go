@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"codeberg.org/aryak/simplytranslate/utils"
+	"codeberg.org/aryak/mozhi/utils"
 	"fmt"
 	"github.com/spf13/cobra"
 )
@@ -25,7 +25,7 @@ var imgtxtCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(imgtxtCmd)
 
-	imgtxtCmd.Flags().StringVarP(&file, "file", "f", "", "The query SimplyTranslate will listen to. Defaults to 3000, and overrides the SIMPLYTRANSLATE_query environment variable.")
+	imgtxtCmd.Flags().StringVarP(&file, "file", "f", "", "The query Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_query environment variable.")
 
 	langlist = imgtxtCmd.Flag("file").Value.String()
 }

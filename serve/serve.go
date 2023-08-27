@@ -6,8 +6,8 @@ import (
 	"os"
 	"runtime"
 
-	"codeberg.org/aryak/simplytranslate/pages"
-	"codeberg.org/aryak/simplytranslate/utils"
+	"codeberg.org/aryak/mozhi/pages"
+	"codeberg.org/aryak/mozhi/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -33,7 +33,7 @@ func Serve(port string) {
 	app := fiber.New(fiber.Config{
 		Views:   engine,
 		Prefork: false,
-		AppName: "SimplyTranslate",
+		AppName: "Mozhi",
 		// kind of screwed up way to fix rate limits
 		EnableTrustedProxyCheck: true,
 		TrustedProxies:          []string{"0.0.0.0/0"},
@@ -99,7 +99,7 @@ func Serve(port string) {
 		})
 	})
 
-	val, ok := os.LookupEnv("SIMPLYTRANSLATE_PORT")
+	val, ok := os.LookupEnv("MOZHI_PORT")
 	if !ok {
 		val = "3000"
 	}

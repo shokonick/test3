@@ -12,7 +12,7 @@ package utils
 //}
 //// To get new language lists for google yandex and libertranslate.
 //func LangListGoogle(listType string) []List {
-//	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
+//	UserAgent, ok := os.LookupEnv("MOZHI_USER_AGENT")
 //	if !ok {
 //		UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 //	}
@@ -55,7 +55,7 @@ package utils
 //	return ListData
 //}
 //func LangListYandex(listType string) []List {
-//	UserAgent, ok := os.LookupEnv("SIMPLYTRANSLATE_USER_AGENT")
+//	UserAgent, ok := os.LookupEnv("MOZHI_USER_AGENT")
 //	if !ok {
 //		UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 //	}

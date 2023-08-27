@@ -1,4 +1,4 @@
-module codeberg.org/aryak/simplytranslate
+module codeberg.org/aryak/mozhi
 
 go 1.20
 
