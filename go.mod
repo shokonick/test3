@@ -2,6 +2,8 @@ module codeberg.org/aryak/mozhi
 
 go 1.20
 
+replace github.com/OwO-Network/gdeeplx => github.com/gi-yt/gdeeplx v0.0.0-20230817133036-0eb71706cd51
+
 require (
 	github.com/OwO-Network/gdeeplx v0.0.1
 	github.com/carlmjohnson/requests v0.23.4
