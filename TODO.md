@@ -1,4 +1,5 @@
 # TODO
+- Update/deprecate imgtxt
 - Create a web interface
 - Make CLI usable
 - Add actual explanations for CLI arguments
