@@ -18,8 +18,7 @@ I'm initially focusing on the api and engines, but eventually Mozhi will have a 
 ## Building
 ```
 go mod download
-go install github.com/swaggo/swag/cmd/swag@latest
-swag init
+go run github.com/swaggo/swag/cmd/swag@latest init
 go build -o mozhi
 ```
 
