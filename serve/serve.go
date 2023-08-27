@@ -79,10 +79,6 @@ func Serve(port string) {
 	})
 
 	app.Get("/", pages.HandleIndex)
-	app.Get("/api/translate", pages.HandleTranslate)
-	app.Get("/api/source_languages", pages.HandleSourceLanguages)
-	app.Get("/api/target_languages", pages.HandleTargetLanguages)
-	app.Get("/api/tts", pages.HandleTTS)
 	app.Static("/css", "./public/css", staticConfig)
 	app.Static("/robots.txt", "./public/robots.txt", staticConfig)
 	app.Static("/favicon.ico", "./public/assets/favicon.ico", staticConfig)
@@ -90,8 +86,11 @@ func Serve(port string) {
 	// app.Get("/about", pages.HandleAbout)
 
 	api := app.Group("/api")
-	v1 := api.Group("/v1")
-	v1.Get("/version", func(c *fiber.Ctx) error {
+	api.Get("/translate", pages.HandleTranslate)
+	api.Get("/source_languages", pages.HandleSourceLanguages)
+	api.Get("/target_languages", pages.HandleTargetLanguages)
+	api.Get("/tts", pages.HandleTTS)
+	api.Get("/version", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"version":      utils.Version(),
 			"fiberversion": fiber.Version,

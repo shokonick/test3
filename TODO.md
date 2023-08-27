@@ -1,6 +1,9 @@
 # TODO
 - Create a web interface
 - Make CLI usable
+- API Docs
+- Support for disabling engines
+- Support for changing LibreTranslate instance
 - Add actual explanations for CLI arguments
 - Proper Error handling for requests.go
 - Tell which language Detect Language chose -- Only support for deepl and google is pending
