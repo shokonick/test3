@@ -22,21 +22,21 @@ func LangList(engine string, listType string) ([]List, error) {
 		return []List{}, errors.New("list type invalid: either give tl for target languages or sl for source languages.")
 	}
 	if engine == "google" {
-		data = LangListGoogle("sl")
+		data = LangListGoogle(listType)
 	} else if engine == "libre" {
-		data = LangListLibreTranslate("sl")
+		data = LangListLibreTranslate(listType)
 	} else if engine == "reverso" {
-		data = LangListReverso("sl")
+		data = LangListReverso(listType)
 	} else if engine == "deepl" {
-		data = LangListDeepl("sl")
+		data = LangListDeepl(listType)
 	} else if engine == "watson" {
-		data = LangListWatson("sl")
+		data = LangListWatson(listType)
 	} else if engine == "yandex" {
-		data = LangListYandex("sl")
+		data = LangListYandex(listType)
 	} else if engine == "mymemory" {
-		data = LangListMyMemory("sl")
+		data = LangListMyMemory(listType)
 	} else if engine == "duckduckgo" {
-		data = LangListDuckDuckGo("sl")
+		data = LangListDuckDuckGo(listType)
 	} else {
 		return []List{}, errors.New("Engine does not exist.")
 	}

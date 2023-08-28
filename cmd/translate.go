@@ -35,7 +35,7 @@ var translateCmd = &cobra.Command{
 				fmt.Println(err)
 			}
 			for _, idx := range idxs {
-				fmt.Println("Selected Language:", list[idx].Id)
+				fmt.Println("Selected Language:", list[idx].Id, "("+list[idx].Name+")")
 			}
 		} else if engine == "all" {
 			fmt.Println(utils.TranslateAll(dest, source, query))

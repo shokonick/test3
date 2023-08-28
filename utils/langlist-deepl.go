@@ -128,6 +128,8 @@ func LangListDeepl(listType string) []List {
 			Name: "Detect Language",
 		}}
 		ListD = append(append([]List{}, auto...), ListData...)
+	} else {
+		ListD = ListData
 	}
 	return ListD
 }
