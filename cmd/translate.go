@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/ktr0731/go-fuzzyfinder"
 	"codeberg.org/aryak/mozhi/utils"
 
 	"github.com/spf13/cobra"
@@ -13,50 +12,50 @@ var (
 	query    string
 	source   string
 	dest     string
-	langlist string
 )
 
 var translateCmd = &cobra.Command{
 	Use:   "translate",
 	Short: "Translate.",
-	Long:  `Translate.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if langlist == "sl" || langlist == "tl" {
-			list, err := utils.LangList(engine, langlist)
-			if err != nil {
-				fmt.Println(err)
+		if engine == "all" {
+			data := utils.TranslateAll(dest, source, query)
+			for i := 0; i < len(data); i++ {
+				fmt.Println("-----------------------------------")
+				fmt.Println("Engine: "+data[i].Engine)
+				fmt.Println("Translated Text: "+data[i].OutputText)
+				if source == "auto" {
+					fmt.Println("Detected Language: "+data[i].AutoDetect)
+				}
+				fmt.Println("Source Language: "+data[i].SourceLang)
+				fmt.Println("Target Language: "+data[i].TargetLang)
 			}
-			idxs, err := fuzzyfinder.FindMulti(
-				list,
-				func(i int) string {
-					return list[i].Name
-				})
-			if err != nil {
-				fmt.Println(err)
-			}
-			for _, idx := range idxs {
-				fmt.Println("Selected Language:", list[idx].Id, "("+list[idx].Name+")")
-			}
-		} else if engine == "all" {
-			fmt.Println(utils.TranslateAll(dest, source, query))
 		} else {
-			fmt.Println(utils.Translate(engine, dest, source, query))
+			data, err := utils.Translate(engine, dest, source, query)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println("Translated Text: "+data.OutputText)
+			if source == "auto" {
+				fmt.Println("Detected Language: "+data.AutoDetect)
+			}
+			fmt.Println("Source Language: "+data.SourceLang)
+			fmt.Println("Target Language: "+data.TargetLang)
 		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(translateCmd)
+	translateCmd.Flags().SortFlags = false
 
-	translateCmd.Flags().StringVarP(&engine, "engine", "e", "", "The source Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_source environment variable.")
-	translateCmd.Flags().StringVarP(&source, "source", "s", "", "The source Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_source environment variable.")
-	translateCmd.Flags().StringVarP(&dest, "dest", "t", "", "The dest Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_dest environment variable.")
-	translateCmd.Flags().StringVarP(&query, "query", "q", "", "The query Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_query environment variable.")
-	translateCmd.Flags().StringVarP(&langlist, "langlist", "l", "", "The query Mozhi will listen to. Defaults to 3000, and overrides the MOZHI_query environment variable.")
+	translateCmd.Flags().StringVarP(&engine, "engine", "e", "", "[google|libre|reverso|deepl|watson|yandex|mymemory|duckduckgo]")
+	translateCmd.Flags().StringVarP(&source, "source", "s", "", "Source language. Use langlist command to get code for your language")
+	translateCmd.Flags().StringVarP(&dest, "dest", "t", "", "Target language. Use langlist command to get code for your language")
+	translateCmd.Flags().StringVarP(&query, "query", "q", "", "Text to be translated")
 
-	engine = translateCmd.Flag("engine").Value.String()
-	dest = translateCmd.Flag("dest").Value.String()
-	source = translateCmd.Flag("source").Value.String()
-	query = translateCmd.Flag("query").Value.String()
-	langlist = translateCmd.Flag("query").Value.String()
+	translateCmd.MarkFlagRequired("engine")
+	translateCmd.MarkFlagRequired("source")
+	translateCmd.MarkFlagRequired("dest")
+	translateCmd.MarkFlagRequired("query")
 }

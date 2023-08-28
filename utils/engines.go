@@ -336,15 +336,13 @@ func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) 
 }
 
 func TranslateAll(to string, from string, query string) []LangOut {
-	reverso, _ := TranslateReverso(to, from, query)
-	google, _ := TranslateGoogle(to, from, query)
-	libretranslate, _ := TranslateLibreTranslate(to, from, query)
-	watson, _ := TranslateWatson(to, from, query)
-	mymemory, _ := TranslateMyMemory(to, from, query)
-	yandex, _ := TranslateYandex(to, from, query)
-	deepl, _ := TranslateDeepl(to, from, query)
-	duckduckgo, _ := TranslateDuckDuckGo(to, from, query)
-
-	langout := []LangOut{reverso, google, libretranslate, watson, mymemory, yandex, deepl, duckduckgo}
+	engines := []string{"reverso", "google", "libre", "watson", "mymemory", "yandex", "deepl", "duckduckgo"}
+	langout := []LangOut{}
+	for i := 0; i < len(engines); i++ {
+		data, err := Translate(engines[i], to, from, query)
+		if err == nil {
+			langout = append(langout, data)
+		}
+	}
 	return langout
 }

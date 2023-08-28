@@ -3,6 +3,8 @@
 - Make CLI usable
 - CI/CD
 - Support for disabling engines
+- Ability for user to choose engines they want to use
+- Fix DDG
 - Support for changing LibreTranslate instance
 - Add actual explanations for CLI arguments
 - Proper Error handling for requests.go
