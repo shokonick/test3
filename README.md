@@ -1,4 +1,5 @@
 # Mozhi
+![Matrix](https://img.shields.io/matrix/%23mozhi%3Aprojectsegfau.lt)
 Mozhi (spelt moḻi) is an alternative-frontend for many translation engines.
 
 It was initially made as a maintained fork/rewrite of [simplytranslate](https://codeberg.org/SimpleWeb/SimplyTranslate-Web), but has grown to have a lot more features as well!
