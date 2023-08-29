@@ -6,9 +6,9 @@ import (
 	"os"
 	"runtime"
 
+	_ "codeberg.org/aryak/mozhi/docs"
 	"codeberg.org/aryak/mozhi/pages"
 	"codeberg.org/aryak/mozhi/utils"
-	_ "codeberg.org/aryak/mozhi/docs"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -22,12 +22,12 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-//	@title			Mozhi API
-//	@version		1.0
-//	@description	API for Mozhi, the alternative-frontend for many translation engines.
-//	@license.name	AGPL 3.0
-//	@license.url	https://www.gnu.org/licenses/agpl-3.0.txt
-//	@BasePath		/api
+// @title			Mozhi API
+// @version		1.0
+// @description	API for Mozhi, the alternative-frontend for many translation engines.
+// @license.name	AGPL 3.0
+// @license.url	https://www.gnu.org/licenses/agpl-3.0.txt
+// @BasePath		/api
 func Serve(port string) {
 	engine := html.New("./views", ".html")
 

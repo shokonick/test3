@@ -6,6 +6,7 @@ import (
 )
 
 // HandleSourceLanguages godoc
+//
 //	@Summary	Show list of available source languages for engine
 //	@Param		engine	query		string	true	"Engine name"
 //	@Success	200		{object}	utils.List
@@ -23,6 +24,7 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 }
 
 // HandleTargetLanguages godoc
+//
 //	@Summary	Show list of available target languages for engine
 //	@Param		engine	query		string	true	"Engine name"
 //	@Success	200		{object}	utils.List
@@ -40,6 +42,7 @@ func HandleTargetLanguages(c *fiber.Ctx) error {
 }
 
 // HandleTTS godoc
+//
 //	@Summary	Get Text-To-Speech for specified language using specified engine
 //	@Param		engine	query	string	true	"Engine name"
 //	@Param		lang	query	string	true	"Language being TTS'd"
@@ -61,6 +64,7 @@ func HandleTTS(c *fiber.Ctx) error {
 }
 
 // HandleTranslate godoc
+//
 //	@Summary		Translate text
 //	@Description	When engine is set to all, it will return an array of utils.LangOut.
 //	@Param			engine	query		string	true	"Engine name"

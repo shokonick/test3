@@ -2,15 +2,17 @@ package cmd
 
 import (
 	"fmt"
+
 	"codeberg.org/aryak/mozhi/utils"
-	"github.com/spf13/cobra"
+
 	"github.com/ktr0731/go-fuzzyfinder"
+	"github.com/spf13/cobra"
 )
 
 var (
 	engineused string
-	listtype string
-	raw bool
+	listtype   string
+	raw        bool
 )
 
 // langlistCmd represents the langlist command
