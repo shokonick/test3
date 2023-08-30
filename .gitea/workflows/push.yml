@@ -16,7 +16,7 @@ jobs:
           registry: codeberg.org
       
       - name: Build and push Docker image
-        uses: docker/build-push-action@master
+        uses: docker/build-push-action@v1
         with:
           context: .
           file: ./Dockerfile
