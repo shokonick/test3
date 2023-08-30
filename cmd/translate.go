@@ -41,6 +41,7 @@ var translateCmd = &cobra.Command{
 					fmt.Println("Source Language: " + data[i].SourceLang)
 					fmt.Println("Target Language: " + data[i].TargetLang)
 				}
+				fmt.Println("-----------------------------------")
 			}
 		} else {
 			data, err := utils.Translate(engine, dest, source, query)

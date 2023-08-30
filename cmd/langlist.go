@@ -23,20 +23,21 @@ var langlistCmd = &cobra.Command{
 		list, err := utils.LangList(engineused, listtype)
 		if err != nil {
 			fmt.Println(err)
-		}
-		idxs, err := fuzzyfinder.FindMulti(
-			list,
-			func(i int) string {
-				return list[i].Name
-			})
-		if err != nil {
-			fmt.Println(err)
-		}
-		for _, idx := range idxs {
-			if raw == true {
-				fmt.Println(list[idx].Id)
-			} else {
-				fmt.Println("Selected Language:", list[idx].Id, "("+list[idx].Name+")")
+		} else {
+			idxs, err := fuzzyfinder.FindMulti(
+				list,
+				func(i int) string {
+					return list[i].Name
+				})
+			if err != nil {
+				fmt.Println(err)
+			}
+			for _, idx := range idxs {
+				if raw == true {
+					fmt.Println(list[idx].Id)
+				} else {
+					fmt.Println("Selected Language:", list[idx].Id, "("+list[idx].Name+")")
+				}
 			}
 		}
 	},

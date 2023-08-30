@@ -29,6 +29,23 @@ Mozhi makes use of swagger (with the swagger fiber middleware) to manage the doc
 
 You can find it in /api/swagger of any instance.
 
+## Configuration
+Features of Mozhi can be customized and toggled on/off using Environment Variables.
+
+- `MOZHI_PORT`: Port the webserver listens on (if hosting API)
+- `MOZHI_USER_AGENT`: Change user agent used to make HTTP requests
+- `MOZHI_LIBRETRANSLATE_URL`: URL of Libretranslate instance (Example: `MOZHI_LIBRETRANSLATE_URL=https://lt.psf.lt`)
+
+These envvars turn off/on engines. By default all of them are enabled.
+- `MOZHI_GOOGLE_ENABLED`
+- `MOZHI_REVERSO_ENABLED`
+- `MOZHI_DEEPL_ENABLED`
+- `MOZHI_LIBRETRANSLATE_ENABLED`
+- `MOZHI_YANDEX_ENABLED`
+- `MOZHI_WATSON_ENABLED`
+- `MOZHI_MYMEMORY_ENABLED`
+- `MOZHI_DUCKDUCKGO_ENABLED`
+
 ## Features
 - An all mode where the responses of all supported engines will be shown.
 - Autodetect which will show the language that was detected
