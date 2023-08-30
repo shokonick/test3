@@ -53,15 +53,30 @@ jobs:
         with:
           name: mozhi-linux-amd64
           path: mozhi-linux-amd64
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
           name: mozhi-linux-arm64
           path: mozhi-linux-arm64
 
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
           name: mozhi-windows-amd64.exe
           path: mozhi-windows-amd64.exe
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
           name: mozhi-windows-arm64.exe
           path: mozhi-windows-arm64.exe
 
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
           name: mozhi-darwin-amd64
           path: mozhi-darwin-amd64
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
           name: mozhi-darwin-arm64
           path: mozhi-darwin-arm64
