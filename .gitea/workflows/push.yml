@@ -1,4 +1,4 @@
-name: mozhi-on-push-pipeline
+name: mozhi-pipeline
 on: push
 jobs:
   deploy:
