@@ -15,6 +15,7 @@ jobs:
         with:
           username: aryak
           password: ${{ secrets.MOZHI_DOCKER_PASSWORD }}
+          registry: codeberg.org
 
       - name: Build and push
         id: docker_build
