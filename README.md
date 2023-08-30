@@ -25,9 +25,9 @@ go build -o mozhi
 ```
 
 ## API Docs
-Mozhi makes use of swagger (with the swagger fiber middleware) to manage the documentation of the API.
+Mozhi makes use of swagger (using the fiber middleware) to manage the documentation of the API.
 
-You can find it in /api/swagger of any instance.
+You can find it in /api/swagger of any instance ([example](https://mozhi.aryak.me/api/swagger/index.html)).
 
 ## Configuration
 Features of Mozhi can be customized and toggled on/off using Environment Variables.
@@ -45,6 +45,12 @@ These envvars turn off/on engines. By default all of them are enabled.
 - `MOZHI_WATSON_ENABLED`
 - `MOZHI_MYMEMORY_ENABLED`
 - `MOZHI_DUCKDUCKGO_ENABLED`
+
+## Instances
+
+| Link | Cloudflare | Country | ISP | 
+| -------- | ---------- | ----------- | ----- |
+| [mozhi.aryak.me](https://mozhi.aryak.me) | No | India | Airtel |
 
 ## Features
 - An all mode where the responses of all supported engines will be shown.
