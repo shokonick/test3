@@ -17,6 +17,9 @@ I'm initially focusing on the api and engines, but eventually Mozhi will have a 
 - MyMemory
 - DuckDuckGo (almost 1-1 with Bing Translate)
 
+## Installing
+You can either use [docker](https://codeberg.org/aryak/mozhi/src/branch/master/compose.yml) or the build artifacts from [CI jobs on git.projectsegfau.lt](https://git.projectsegfau.lt/arya/mozhi/actions).
+
 ## Building
 ```
 go mod download
