@@ -2,6 +2,7 @@ package utils
 
 import (
 	"errors"
+	"os"
 )
 
 type List struct {
@@ -24,6 +25,9 @@ func LangList(engine string, listType string) ([]List, error) {
 	if engine == "google" {
 		data = LangListGoogle(listType)
 	} else if engine == "libre" {
+		if os.Getenv("MOZHI_LIBRETRANSLATE_URL") == "" {
+			return []List{}, errors.New("Please set MOZHI_LIBRETRANSLATE_URL if you want to use libretranslate. Example: MOZHI_LIBRETRANSLATE_URL=https://lt.psf.lt")
+		}
 		data = LangListLibreTranslate(listType)
 	} else if engine == "reverso" {
 		data = LangListReverso(listType)
@@ -50,6 +54,9 @@ func Translate(engine string, to string, from string, text string) (LangOut, err
 	if engine == "google" {
 		data, err = TranslateGoogle(to, from, text)
 	} else if engine == "libre" {
+		if os.Getenv("MOZHI_LIBRETRANSLATE_URL") == "" {
+			return LangOut{}, errors.New("Please set MOZHI_LIBRETRANSLATE_URL if you want to use libretranslate. Example: MOZHI_LIBRETRANSLATE_URL=https://lt.psf.lt")
+		}
 		data, err = TranslateLibreTranslate(to, from, text)
 	} else if engine == "reverso" {
 		data, err = TranslateReverso(to, from, text)

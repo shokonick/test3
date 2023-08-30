@@ -54,13 +54,14 @@ var translateCmd = &cobra.Command{
 			} else {
 				if err != nil {
 					fmt.Println(err)
+				} else {
+					fmt.Println("Translated Text: " + data.OutputText)
+					if source == "auto" {
+						fmt.Println("Detected Language: " + data.AutoDetect)
+					}
+					fmt.Println("Source Language: " + data.SourceLang)
+					fmt.Println("Target Language: " + data.TargetLang)
 				}
-				fmt.Println("Translated Text: " + data.OutputText)
-				if source == "auto" {
-					fmt.Println("Detected Language: " + data.AutoDetect)
-				}
-				fmt.Println("Source Language: " + data.SourceLang)
-				fmt.Println("Target Language: " + data.TargetLang)
 			}
 		}
 	},
