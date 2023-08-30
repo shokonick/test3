@@ -2,7 +2,10 @@ package utils
 
 import (
 	"errors"
+	"io"
+	"net/http"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/OwO-Network/gdeeplx"
@@ -10,6 +13,8 @@ import (
 	"github.com/google/go-querystring/query"
 	"github.com/google/uuid"
 )
+
+var ddgVqd string
 
 func TranslateGoogle(to string, from string, text string) (LangOut, error) {
 	ToOrig := to
@@ -294,6 +299,35 @@ func TranslateDeepl(to string, from string, text string) (LangOut, error) {
 	return langout, nil
 }
 
+func ddgVqdUpdate() {
+	r, err := http.NewRequest("GET", "https://duckduckgo.com/?q=translate", nil)
+	if err != nil {
+		panic(err)
+	}
+
+	UserAgent, ok := os.LookupEnv("MOZHI_USER_AGENT")
+	if !ok {
+		UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+	}
+	r.Header.Set("User-Agent", UserAgent)
+
+	client := &http.Client{}
+	res, err := client.Do(r)
+	if err != nil {
+		panic(err)
+	}
+
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		panic(err)
+	}
+	re := regexp.MustCompile(`vqd="([^"]*)"`)
+	match := re.FindStringSubmatch(string(body))
+	ddgVqd = match[1]
+}
+
 func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) {
 	FromOrig := from
 	ToOrig := to
@@ -317,14 +351,15 @@ func TranslateDuckDuckGo(to string, from string, query string) (LangOut, error) 
 		return LangOut{}, errors.New("Source language code invalid")
 	}
 	var url string
+	var langout LangOut
+	ddgVqdUpdate()
 	if from == "auto" {
-		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to=" + to
+		url = "https://duckduckgo.com/translation.js?vqd=" + ddgVqd + "&query=translate&to=" + to
 	} else {
-		url = "https://duckduckgo.com/translation.js?vqd=4-80922924764394623683473042291214994119&query=translate&to=" + to + "&from=" + from
+		url = "https://duckduckgo.com/translation.js?vqd=" + ddgVqd + "&query=translate&to=" + to + "&from=" + from
 	}
 	duckDuckGoOut := PostRequest(url, []byte(query))
 	gjsonArr := duckDuckGoOut.Get("translated").Array()
-	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
 	langout.Engine = "duckduckgo"
 	langout.SourceLang = FromOrig
