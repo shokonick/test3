@@ -1,12 +1,9 @@
 # TODO
 - Create a web interface
-- Make CLI usable
+- Interactive/Step-by-step CLI
 - CI/CD
 - Support for disabling engines
 - Ability for user to choose engines they want to use
-- Fix DDG
-- Support for changing LibreTranslate instance
-- Add actual explanations for CLI arguments
 - Proper Error handling for requests.go
 - Tell which language Detect Language chose -- Only support for deepl and google is pending
 - Finish simplytranslate-py compatible API for translations

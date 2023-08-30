@@ -129,7 +129,7 @@ func TranslateLibreTranslate(to string, from string, query string) (LangOut, err
 	}
 	json := []byte(`{"q":"` + query + `","source":"` + from + `","target":"` + to + `"}`)
 	// TODO: Make it configurable
-	libreTranslateOut := PostRequest("https://translate.argosopentech.com/translate", json)
+	libreTranslateOut := PostRequest(os.Getenv("MOZHI_LIBRETRANSLATE_URL")+"/translate", json)
 	gjsonArr := libreTranslateOut.Get("translatedText").Array()
 	var langout LangOut
 	langout.OutputText = gjsonArr[0].String()
