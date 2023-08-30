@@ -25,3 +25,43 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: codeberg.org/aryak/mozhi:latest
+  build_artifact:
+    runs-on: ubuntu-latest
+    name: Build and publish artifacts
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Setup Go compiler
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Build mozhi
+        run: |
+          go mod download
+          go install github.com/swaggo/swag/cmd/swag@latest
+          swag init
+          GOOS=linux GOARCH=amd64 go build -o mozhi-linux-amd64
+          GOOS=linux GOARCH=arm64 go build -o mozhi-linux-arm64
+          GOOS=windows GOARCH=amd64 go build -o mozhi-windows-amd64.exe
+          GOOS=windows GOARCH=arm64 go build -o mozhi-windows-arm64.exe
+          GOOS=darwin GOARCH=amd64 go build -o mozhi-darwin-amd64
+          GOOS=darwin GOARCH=arm64 go build -o mozhi-darwin-arm64
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: mozhi-linux-amd64
+          path: mozhi-linux-amd64
+          name: mozhi-linux-arm64
+          path: mozhi-linux-arm64
+
+          name: mozhi-windows-amd64.exe
+          path: mozhi-windows-amd64.exe
+          name: mozhi-windows-arm64.exe
+          path: mozhi-windows-arm64.exe
+
+          name: mozhi-darwin-amd64
+          path: mozhi-darwin-amd64
+          name: mozhi-darwin-arm64
+          path: mozhi-darwin-arm64
