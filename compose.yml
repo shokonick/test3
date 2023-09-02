@@ -1,7 +1,8 @@
 version: "3"
 services:
   mozhi:
-    build: .
+    #build: .
+    image: codeberg.org/aryak/mozhi:latest
     restart: unless-stopped
     ports:
       - "3000:3000"
