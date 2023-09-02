@@ -1,3 +1,18 @@
+<div align="center">
+  <img src="public/assets/mozhi.svg" width="192" height="192" alt="Mozhi logo">
+  <h1>Mozhi</h1>
+
+  <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
+    <img alt="License: AGPLv3" src="https://shields.io/badge/License-AGPL%20v3-blue.svg">
+  </a>
+  <a href="https://matrix.to/#/#mozhi:projectsegfau.lt">
+  	<img alt="Matrix" src="https://img.shields.io/badge/matrix-000000?style=for-the-badge&logo=Matrix&logoColor=white">
+  </a>
+
+  <h3>Mozhi (spelt moḻi) is an alternative-frontend for many translation engines.</h3>
+</div>
+
+
 # Mozhi
 [![Matrix](https://img.shields.io/badge/matrix-000000?style=for-the-badge&logo=Matrix&logoColor=white)](https://matrix.to/#/#mozhi:projectsegfau.lt)
 

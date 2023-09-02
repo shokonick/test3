@@ -1,7 +1,6 @@
 # TODO
 - Create a web interface
 - Interactive/Step-by-step CLI
-- CI/CD
 - Ability for user to choose engines they want to use
 - Proper Error handling for requests.go
 - Tell which language Detect Language chose -- Only support for deepl and google is pending

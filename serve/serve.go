@@ -90,7 +90,7 @@ func Serve(port string) {
 	app.Static("/css", "./public/css", staticConfig)
 	app.Static("/robots.txt", "./public/robots.txt", staticConfig)
 	app.Static("/favicon.ico", "./public/assets/favicon.ico", staticConfig)
-	app.Static("/logo.svg", "./public/assets/logo.svg", staticConfig)
+	app.Static("/mozhi.svg", "./public/assets/mozhi.svg", staticConfig)
 	// app.Get("/about", pages.HandleAbout)
 
 	api := app.Group("/api")
