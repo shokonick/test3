@@ -26,13 +26,16 @@ I'm initially focusing on the api and engines, but eventually Mozhi will have a 
 - MyMemory
 - DuckDuckGo (almost 1-1 with Bing Translate)
 
+## Where is the engine code?
+The engine code has recently been split from the main codebase. Please check [aryak/libmozhi](https://codeberg.org/aryak/libmozhi) for it.
+
 ## Installing
 You can either use [docker](https://codeberg.org/aryak/mozhi/src/branch/master/compose.yml) or the build artifacts from [CI jobs on git.projectsegfau.lt](https://git.projectsegfau.lt/arya/mozhi/actions).
 
 ## Building
 ```
 go mod download
-go run github.com/swaggo/swag/cmd/swag@latest init
+go run github.com/swaggo/swag/cmd/swag@latest init --parseDependency
 go build -o mozhi
 ```
 

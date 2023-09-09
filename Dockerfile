@@ -7,8 +7,7 @@ RUN apk --no-cache add git ca-certificates
 COPY . .
 
 RUN go mod download
-RUN go install github.com/swaggo/swag/cmd/swag@latest
-RUN swag init
+RUN go run github.com/swaggo/swag/cmd/swag@latest init --parseDependency
 RUN GOOS=linux GOARCH=$TARGETARCH go build -o /src/mozhi
 
 FROM alpine:3.16 as bin

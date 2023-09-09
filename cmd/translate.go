@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"codeberg.org/aryak/mozhi/utils"
+	libmozhi "codeberg.org/aryak/libmozhi"
 
 	"github.com/spf13/cobra"
 )
@@ -22,7 +22,7 @@ var translateCmd = &cobra.Command{
 	Short: "Translate.",
 	Run: func(cmd *cobra.Command, args []string) {
 		if engine == "all" {
-			data := utils.TranslateAll(dest, source, query)
+			data := libmozhi.TranslateAll(dest, source, query)
 			if rawjson {
 				j, err := json.Marshal(data)
 				if err != nil {
@@ -44,7 +44,7 @@ var translateCmd = &cobra.Command{
 				fmt.Println("-----------------------------------")
 			}
 		} else {
-			data, err := utils.Translate(engine, dest, source, query)
+			data, err := libmozhi.Translate(engine, dest, source, query)
 			if rawjson {
 				j, err := json.Marshal(data)
 				if err != nil {

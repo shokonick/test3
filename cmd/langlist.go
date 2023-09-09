@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"codeberg.org/aryak/mozhi/utils"
+	libmozhi "codeberg.org/aryak/libmozhi"
 
 	"github.com/ktr0731/go-fuzzyfinder"
 	"github.com/spf13/cobra"
@@ -20,7 +20,7 @@ var langlistCmd = &cobra.Command{
 	Use:   "langlist",
 	Short: "List/select languages supported by an engine.",
 	Run: func(cmd *cobra.Command, args []string) {
-		list, err := utils.LangList(engineused, listtype)
+		list, err := libmozhi.LangList(engineused, listtype)
 		if err != nil {
 			fmt.Println(err)
 		} else {

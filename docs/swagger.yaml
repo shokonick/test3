@@ -32,7 +32,7 @@ paths:
         type: string
       responses:
         "200":
-          description: OK
+          description: success
           schema:
             $ref: '#/definitions/utils.List'
       summary: Show list of available source languages for engine
@@ -46,13 +46,13 @@ paths:
         type: string
       responses:
         "200":
-          description: OK
+          description: success
           schema:
             $ref: '#/definitions/utils.List'
       summary: Show list of available target languages for engine
   /api/translate:
     get:
-      description: When engine is set to all, it will return an array of utils.LangOut.
+      description: When engine is set to all, it will return an array of libmozhi.LangOut.
       parameters:
       - description: Engine name
         in: query
@@ -76,7 +76,7 @@ paths:
         type: string
       responses:
         "200":
-          description: OK
+          description: success
           schema:
             $ref: '#/definitions/utils.LangOut'
       summary: Translate text

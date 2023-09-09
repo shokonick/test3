@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"runtime"
 
-	"codeberg.org/aryak/mozhi/utils"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -22,7 +20,6 @@ func HandleIndex(c *fiber.Ctx) error {
 
 	return c.Render("index", fiber.Map{
 		"host":         c.Hostname(),
-		"version":      utils.Version(),
 		"fiberversion": fiber.Version,
 		"goversion":    runtime.Version(),
 	})

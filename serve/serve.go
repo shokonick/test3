@@ -8,8 +8,6 @@ import (
 
 	_ "codeberg.org/aryak/mozhi/docs"
 	"codeberg.org/aryak/mozhi/pages"
-	"codeberg.org/aryak/mozhi/utils"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	//"github.com/gofiber/fiber/v2/middleware/limiter"
@@ -100,7 +98,6 @@ func Serve(port string) {
 	api.Get("/tts", pages.HandleTTS)
 	api.Get("/version", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
-			"version":      utils.Version(),
 			"fiberversion": fiber.Version,
 			"goversion":    runtime.Version(),
 		})

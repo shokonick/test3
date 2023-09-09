@@ -2,6 +2,7 @@ package pages
 
 import (
 	"codeberg.org/aryak/mozhi/utils"
+	libmozhi "codeberg.org/aryak/libmozhi"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -9,14 +10,14 @@ import (
 //
 //	@Summary	Show list of available source languages for engine
 //	@Param		engine	query		string	true	"Engine name"
-//	@Success	200		{object}	utils.List
+//	@Success	200		{object}	libmozhi.List
 //	@Router		/api/source_languages [get]
 func HandleSourceLanguages(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "engine is a required query string.")
 	}
-	data, err := utils.LangList(engine, "sl")
+	data, err := libmozhi.LangList(engine, "sl")
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -27,14 +28,14 @@ func HandleSourceLanguages(c *fiber.Ctx) error {
 //
 //	@Summary	Show list of available target languages for engine
 //	@Param		engine	query		string	true	"Engine name"
-//	@Success	200		{object}	utils.List
+//	@Success	200		{object}	libmozhi.List
 //	@Router		/api/target_languages [get]
 func HandleTargetLanguages(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
 	if engine == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "engine is a required query string.")
 	}
-	data, err := utils.LangList(engine, "tl")
+	data, err := libmozhi.LangList(engine, "tl")
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -55,7 +56,7 @@ func HandleTTS(c *fiber.Ctx) error {
 	if engine == "" || text == "" || lang == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "engine, lang, text are required query strings.")
 	}
-	data, err := utils.TTS(engine, lang, text)
+	data, err := libmozhi.TTS(engine, lang, text)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -66,12 +67,12 @@ func HandleTTS(c *fiber.Ctx) error {
 // HandleTranslate godoc
 //
 //	@Summary		Translate text
-//	@Description	When engine is set to all, it will return an array of utils.LangOut.
+//	@Description	When engine is set to all, it will return an array of libmozhi.LangOut.
 //	@Param			engine	query		string	true	"Engine name"
 //	@Param			from	query		string	true	"Source language"
 //	@Param			to		query		string	true	"Target language"
 //	@Param			text	query		string	true	"Text being translated"
-//	@Success		200		{object}	utils.LangOut
+//	@Success		200		{object}	libmozhi.LangOut 
 //	@Router			/api/translate [get]
 func HandleTranslate(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
@@ -81,13 +82,13 @@ func HandleTranslate(c *fiber.Ctx) error {
 	if engine == "" || from == "" || to == "" || text == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "from, to, engine, text are required query strings.")
 	}
-	var dataarr []utils.LangOut
-	var data utils.LangOut
+	var dataarr []libmozhi.LangOut
+	var data libmozhi.LangOut
 	var err error
 	if engine == "all" {
-		dataarr = utils.TranslateAll(to, from, text)
+		dataarr = libmozhi.TranslateAll(to, from, text)
 	} else {
-		data, err = utils.Translate(engine, to, from, text)
+		data, err = libmozhi.Translate(engine, to, from, text)
 		if err != nil {
 			return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 		}

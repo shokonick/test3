@@ -18,7 +18,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "success",
                         "schema": {
                             "$ref": "#/definitions/utils.List"
                         }
@@ -40,7 +40,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "success",
                         "schema": {
                             "$ref": "#/definitions/utils.List"
                         }
@@ -50,7 +50,7 @@
         },
         "/api/translate": {
             "get": {
-                "description": "When engine is set to all, it will return an array of utils.LangOut.",
+                "description": "When engine is set to all, it will return an array of libmozhi.LangOut.",
                 "summary": "Translate text",
                 "parameters": [
                     {
@@ -84,7 +84,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "success",
                         "schema": {
                             "$ref": "#/definitions/utils.LangOut"
                         }

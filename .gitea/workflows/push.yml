@@ -40,8 +40,7 @@ jobs:
       - name: Build mozhi
         run: |
           go mod download
-          go install github.com/swaggo/swag/cmd/swag@latest
-          swag init
+          go run github.com/swaggo/swag/cmd/swag@latest init --parseDependency
           GOOS=linux GOARCH=amd64 go build -o mozhi-linux-amd64
           GOOS=linux GOARCH=arm64 go build -o mozhi-linux-arm64
           GOOS=windows GOARCH=amd64 go build -o mozhi-windows-amd64.exe
