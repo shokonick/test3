@@ -169,3 +169,13 @@ button:hover {
 .custom-select:hover .options {
   display: block;
 }
+
+/* Javascript searchable select used in source/target language */
+.nice-select, .nice-select-dropdown, .nice-select-search {
+  border-right: none;
+  border-bottom: none;
+  border-top: none;
+  border-radius: 4px;
+  border-left: 2px solid #3c67ff;
+  box-shadow: 2px 2px 0px 0px rgba(60, 103, 255, 0.25);
+}
