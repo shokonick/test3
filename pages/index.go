@@ -1,8 +1,8 @@
 package pages
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"codeberg.org/aryak/libmozhi"
+	"github.com/gofiber/fiber/v2"
 )
 
 func HandleIndex(c *fiber.Ctx) error {
@@ -17,7 +17,7 @@ func HandleIndex(c *fiber.Ctx) error {
 			if c.Query("engine") == name {
 				engine = c.Query("engine")
 			}
-		} 
+		}
 		if engine == "" {
 			engine = "google"
 		}
@@ -46,9 +46,9 @@ func HandleIndex(c *fiber.Ctx) error {
 				//ttsFrom = "/api/tts?lang="+translation.AutoDetect+"&engine="+engine+"&text="+originalText
 				ttsFrom = ""
 			} else {
-				ttsFrom = "/api/tts?lang="+from+"&engine="+engine+"&text="+originalText
+				ttsFrom = "/api/tts?lang=" + from + "&engine=" + engine + "&text=" + originalText
 			}
-			ttsTo = "/api/tts?lang="+to+"&engine="+engine+"&text="+translation.OutputText
+			ttsTo = "/api/tts?lang=" + to + "&engine=" + engine + "&text=" + translation.OutputText
 		}
 	}
 	return c.Render("index", fiber.Map{

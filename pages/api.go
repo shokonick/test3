@@ -1,8 +1,8 @@
 package pages
 
 import (
-	"codeberg.org/aryak/mozhi/utils"
 	libmozhi "codeberg.org/aryak/libmozhi"
+	"codeberg.org/aryak/mozhi/utils"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -72,7 +72,7 @@ func HandleTTS(c *fiber.Ctx) error {
 //	@Param			from	query		string	true	"Source language"
 //	@Param			to		query		string	true	"Target language"
 //	@Param			text	query		string	true	"Text being translated"
-//	@Success		200		{object}	libmozhi.LangOut 
+//	@Success		200		{object}	libmozhi.LangOut
 //	@Router			/api/translate [get]
 func HandleTranslate(c *fiber.Ctx) error {
 	engine := utils.Sanitize(c.Query("engine"), "alpha")
