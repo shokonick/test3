@@ -1,28 +1,95 @@
 {{template "header" .}}
-
 <main>
-  <h2>Mozhi</h2>
-  <h3>Translate</h3>
-  
-	<form action="/" method="get">
-	  <label for="textin">Text To Translate:</label>
-	  <textarea id="textin" name="textin" rows="4" cols="50"></textarea>
-	  <input type="checkbox" name="vehicle1" value="Bike">
-	  <label for="vehicle1"> I have a bike</label><br>
-	  <input type="checkbox" name="vehicle2" value="Car">
-	  <label for="vehicle2"> I have a car</label><br>
-	  <input type="checkbox" name="vehicle3" value="Boat" checked>
-	  <label for="vehicle3"> I have a boat</label><br><br>
-	  <input type="submit" value="Submit">
-	</form>
-  <h3>Info</h3>
-  {{ if eq .version "unknown, please build with Go 1.13+ or use Git"}} Mozhi
-  version: <code>unknown</code> {{ else }} Mozhi version:
-  <a href="https://codeberg.org/aryak/mozhi/commit/{{ .version}}"
-    ><code>{{ .version}}</code></a
-  >
-  {{ end }}
-  <br />
-  Fiber version: {{ .fiberversion}}, running on {{ .goversion}}
+  <!-- Need to do this custom selector thingy since <select> cant submit on click -->
+  <div class="custom-select">
+    Translate with: <a href="#" class="selected-option">{{.Engine}}</a>
+    <ul class="options">
+      {{range .enginesNames}}
+      <a href="/?engine={{.}}"><li>{{.}}</li></a>
+      {{end}}
+    </ul>
+  </div>
+
+  <br /><br />
+  <form action="/" method="GET" id="translation-form">
+    <!-- This hidden input is so that the engine gets sent in the GET request even though its not declared here -->
+    <input name="engine" value="{{.Engine}}" type="hidden" />
+
+    <div class="wrap languages">
+      <div class="language">
+        <select name="from" aria-label="Source language">
+          {{range $key, $value := .SourceLanguages}}
+          <option value="{{ .Id }}" {{if eq $.From .Id}}selected{{end}}>
+            {{ .Name }}
+          </option>
+          {{end}}
+        </select>
+      </div>
+
+      <div class="switch_languages">
+        <button
+          id="switchbutton"
+          aria-label="Switch languages"
+          formaction="/switchlanguages?engine={{ .Engine }}"
+          type="submit"
+        >
+          &lt;-&gt;
+        </button>
+      </div>
+
+      <div class="language">
+        <select name="to" aria-label="Target language">
+          {{range $key, $value := .TargetLanguages}}
+          <option value="{{ .Id }}" {{if eq $.To .Id}}selected{{end}}>
+            {{ .Name }}
+          </option>
+          {{end}}
+        </select>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="item-wrapper">
+        <textarea
+          autofocus
+          class="item"
+          id="input"
+          name="text"
+          dir="auto"
+          placeholder="Enter Text Here"
+        >
+{{ .OriginalText }}</textarea
+        >
+        {{if .TtsFrom}}
+        <audio controls>
+          <source type="audio/mpeg" src="{{ .TtsFrom }}" />
+        </audio>
+        {{end}}
+      </div>
+
+      <div class="item-wrapper">
+        <textarea
+          id="output"
+          class="translation item"
+          dir="auto"
+          placeholder="Translation"
+          readonly
+        >
+{{.Translation.OutputText}}</textarea
+        >
+        {{if .Translation.AutoDetect}}
+        <p>
+          Detected Language: {{.Translation.AutoDetect}}{{end}} {{if .TtsTo}}
+          <audio controls>
+            <source type="audio/mpeg" src="{{ .TtsTo }}" />
+          </audio>
+          {{end}}
+        </p>
+      </div>
+    </div>
+    <div style="text-align: center">
+      <button type="submit">Translate with {{ .Engine }}!</button>
+    </div>
+  </form>
 </main>
 {{ template "footer" .}}

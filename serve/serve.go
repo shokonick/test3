@@ -85,10 +85,18 @@ func Serve(port string) {
 	})
 
 	app.Get("/", pages.HandleIndex)
+	app.Get("/switchlanguages", func(c *fiber.Ctx) error {
+		engine := c.Query("engine")
+		from := c.Query("from")
+		to := c.Query("to")
+		text := c.Query("text")
+		return c.Redirect("/?engine="+engine+"&from="+to+"&to="+from+"&text="+text+"&redirected=true", 301)
+	})
 	app.Static("/css", "./public/css", staticConfig)
 	app.Static("/robots.txt", "./public/robots.txt", staticConfig)
 	app.Static("/favicon.ico", "./public/assets/favicon.ico", staticConfig)
 	app.Static("/mozhi.svg", "./public/assets/mozhi.svg", staticConfig)
+	app.Static("/mozhi.png", "./public/assets/mozhi.png", staticConfig)
 	// app.Get("/about", pages.HandleAbout)
 
 	api := app.Group("/api")

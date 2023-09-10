@@ -2,12 +2,27 @@
 <html lang="en">
   <head>
     {{ if .title }}
-    <title>{{ .title }} - Mozhi</title>
-    {{ else }}
+    <title>{{.title}} - Mozhi</title>
+    {{else}}
     <title>Mozhi</title>
-    {{ end }}
-    <link rel="stylesheet" href="/css/global.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    {{end}}
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta
+      name="description"
+      content="Mozhi is an alternative-frontend for many translation engines."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
+
   <body>
+    <header>
+      <a href="/"><img src="/mozhi.png" alt="Mozhi Logo" class="navlogo" /></a>
+      <nav>
+        <a href="/about">About</a>
+        <a href="/api/swagger">API</a>
+      </nav>
+    </header>
+    <br />

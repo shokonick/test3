@@ -1,5 +1,8 @@
 # TODO
-- Create a web interface
+- Support disabling engines with Web interface
+- Make LibreTranslate work with web interface
+- Write an about page for web
+- Make detectlanguage swap the text as well
 - Interactive/Step-by-step CLI
 - Ability for user to choose engines they want to use
 - Proper Error handling for requests.go
