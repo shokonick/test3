@@ -84,6 +84,7 @@ func Serve(port string) {
 	})
 
 	app.Get("/", pages.HandleIndex)
+	app.Get("/about", pages.HandleAbout)
 	app.Get("/switchlanguages", func(c *fiber.Ctx) error {
 		engine := c.Query("engine")
 		from := c.Query("from")
@@ -95,7 +96,6 @@ func Serve(port string) {
 		MaxAge: 2592000,
 		Root:   http.FS(public.GetFiles()),
 	}))
-	// app.Get("/about", pages.HandleAbout)
 
 	api := app.Group("/api")
 	api.Get("/translate", pages.HandleTranslate)
