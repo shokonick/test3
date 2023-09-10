@@ -62,5 +62,6 @@ func HandleIndex(c *fiber.Ctx) error {
 		"To":              to,
 		"TtsFrom":         ttsFrom,
 		"TtsTo":           ttsTo,
+		"defaultLang":     "en",
 	})
 }
