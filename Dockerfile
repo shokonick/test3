@@ -14,8 +14,6 @@ FROM alpine:3.16 as bin
 
 WORKDIR /app
 COPY --from=build /src/mozhi .
-COPY --from=build /src/views ./views
-COPY --from=build /src/public ./public
 
 EXPOSE 3000
 

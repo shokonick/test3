@@ -3,13 +3,17 @@ package serve
 import (
 	"html/template"
 	"log"
+	"net/http"
 	"os"
 	"runtime"
 
 	_ "codeberg.org/aryak/mozhi/docs"
 	"codeberg.org/aryak/mozhi/pages"
+	"codeberg.org/aryak/mozhi/views"
+	"codeberg.org/aryak/mozhi/public"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	//"github.com/gofiber/fiber/v2/middleware/limiter"
 	//	For debugging purposes
 	//	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -27,7 +31,8 @@ import (
 // @license.url	https://www.gnu.org/licenses/agpl-3.0.txt
 // @BasePath		/api
 func Serve(port string) {
-	engine := html.New("./views", ".html")
+	views := http.FS(views.GetFiles())
+	engine := html.NewFileSystem(views, ".html")
 
 	engine.AddFunc(
 		// Add unescape function. This is needed to render HTML from Markdown.
@@ -67,12 +72,6 @@ func Serve(port string) {
 	//	},
 	//})
 
-	staticConfig := fiber.Static{
-		Compress: true,
-		// Cache-Control: max-age=31536000
-		MaxAge: 31536000,
-	}
-
 	// add global headers
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("X-Frame-Options", "SAMEORIGIN")
@@ -92,11 +91,10 @@ func Serve(port string) {
 		text := c.Query("text")
 		return c.Redirect("/?engine="+engine+"&from="+to+"&to="+from+"&text="+text+"&redirected=true", 301)
 	})
-	app.Static("/css", "./public/css", staticConfig)
-	app.Static("/robots.txt", "./public/robots.txt", staticConfig)
-	app.Static("/favicon.ico", "./public/assets/favicon.ico", staticConfig)
-	app.Static("/mozhi.svg", "./public/assets/mozhi.svg", staticConfig)
-	app.Static("/mozhi.png", "./public/assets/mozhi.png", staticConfig)
+	app.Use("/", filesystem.New(filesystem.Config{
+		MaxAge: 2592000,
+		Root:   http.FS(public.GetFiles()),
+	}))
 	// app.Get("/about", pages.HandleAbout)
 
 	api := app.Group("/api")
