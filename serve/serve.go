@@ -9,8 +9,8 @@ import (
 
 	_ "codeberg.org/aryak/mozhi/docs"
 	"codeberg.org/aryak/mozhi/pages"
-	"codeberg.org/aryak/mozhi/views"
 	"codeberg.org/aryak/mozhi/public"
+	"codeberg.org/aryak/mozhi/views"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"

@@ -61,7 +61,7 @@ func HandleTTS(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 	c.Set("Content-Type", "audio/mpeg")
-	return c.Send(data)
+	return c.Status(fiber.StatusOK).Send(data)
 }
 
 // HandleTranslate godoc
