@@ -80,6 +80,7 @@ Mozhi is the word in Tamil for language. Simple as that :P
 ## Credits
 - [Arya](https://aryak.me): creator
 - [Midou36o](https://midou.dev): made the logo
+- [py_](https://github.com/supercolbat): Design files
 - [Missuo](https://github.com/missuo): making gDeepLX that does the hard part of making DeepL work
 - [SimplyTranslate](https://codeberg.org/simpleweb/simplytranslate): Inspiration and base code for the webui
 - [Rimgo](https://codeberg.org/rimgo/rimgo): Code for embedding html in binary
