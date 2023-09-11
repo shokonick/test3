@@ -39,6 +39,7 @@ jobs:
 
       - name: Build mozhi
         run: |
+          export GOPRIVATE=codeberg.org/aryak/libmozhi
           go mod download
           go run github.com/swaggo/swag/cmd/swag@latest init --parseDependency
           GOOS=linux GOARCH=amd64 go build -o mozhi-linux-amd64

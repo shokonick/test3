@@ -34,6 +34,7 @@ You can either use [docker](https://codeberg.org/aryak/mozhi/src/branch/master/c
 
 ## Building
 ```
+GOPRIVATE=codeberg.org/aryak/libmozhi # Get latest commit since proxy server is a bit slow
 go mod download
 go run github.com/swaggo/swag/cmd/swag@latest init --parseDependency
 go build -o mozhi

@@ -6,6 +6,7 @@ WORKDIR /src
 RUN apk --no-cache add git
 COPY . .
 
+ENV GOPRIVATE=codeberg.org/aryak/libmozhi
 RUN go mod download
 RUN go run github.com/swaggo/swag/cmd/swag@latest init --parseDependency
 RUN GOOS=linux GOARCH=$TARGETARCH go build -o /src/mozhi
