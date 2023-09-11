@@ -5,7 +5,7 @@ go 1.21.0
 replace github.com/OwO-Network/gdeeplx => github.com/gi-yt/gdeeplx v0.0.0-20230817133036-0eb71706cd51
 
 require (
-	codeberg.org/aryak/libmozhi v0.0.0-20230909142818-70619214b1ea
+	codeberg.org/aryak/libmozhi v0.0.0-20230911012512-c17439931153
 	github.com/gofiber/fiber/v2 v2.49.1
 	github.com/gofiber/swagger v0.1.13
 	github.com/gofiber/template v1.8.0
