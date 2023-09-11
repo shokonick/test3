@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	libmozhi "codeberg.org/aryak/libmozhi"
+	"codeberg.org/aryak/libmozhi"
 
 	"github.com/spf13/cobra"
 )
@@ -72,7 +72,7 @@ func init() {
 	rootCmd.AddCommand(translateCmd)
 	translateCmd.Flags().SortFlags = false
 
-	translateCmd.Flags().StringVarP(&engine, "engine", "e", "", "[google|libre|reverso|deepl|watson|yandex|mymemory|duckduckgo]")
+	translateCmd.Flags().StringVarP(&engine, "engine", "e", "", "[all|google|libre|reverso|deepl|watson|yandex|mymemory|duckduckgo]")
 	translateCmd.Flags().StringVarP(&source, "source", "s", "", "Source language. Use langlist command to get code for your language")
 	translateCmd.Flags().StringVarP(&dest, "dest", "t", "", "Target language. Use langlist command to get code for your language")
 	translateCmd.Flags().StringVarP(&query, "query", "q", "", "Text to be translated")

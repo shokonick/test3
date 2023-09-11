@@ -2,11 +2,12 @@
 <main>
   <!-- Need to do this custom selector thingy since <select> cant submit on click -->
   <div class="custom-select">
-    Translate with: <a href="#" class="selected-option">{{.Engine}}</a>
+    {{range $key, $value := .enginesNames}} {{ if eq $.Engine $key }}Translate
+    with: <a href="#" class="selected-option">{{$value}}</a> {{end}} {{end}}
     <ul class="options">
-      {{range .enginesNames}}
-      <a href="/?engine={{.}}">
-        <li>{{.}}</li>
+      {{range $key, $value := .enginesNames}}
+      <a href="/?engine={{$key}}">
+        <li>{{$value}}</li>
       </a>
       {{end}}
     </ul>

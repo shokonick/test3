@@ -48,7 +48,6 @@ You can find it in /api/swagger of any instance ([example](https://mozhi.aryak.m
 Features of Mozhi can be customized and toggled on/off using Environment Variables.
 
 - `MOZHI_PORT`: Port the webserver listens on (if hosting API)
-- `MOZHI_USER_AGENT`: Change user agent used to make HTTP requests
 - `MOZHI_LIBRETRANSLATE_URL`: URL of Libretranslate instance (Example: `MOZHI_LIBRETRANSLATE_URL=https://lt.psf.lt`)
 
 These envvars turn off/on engines. By default all of them are enabled.

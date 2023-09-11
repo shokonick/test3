@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	libmozhi "codeberg.org/aryak/libmozhi"
+	"codeberg.org/aryak/libmozhi"
 
 	"github.com/ktr0731/go-fuzzyfinder"
 	"github.com/spf13/cobra"

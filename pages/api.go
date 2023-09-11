@@ -1,7 +1,7 @@
 package pages
 
 import (
-	libmozhi "codeberg.org/aryak/libmozhi"
+	"codeberg.org/aryak/libmozhi"
 	"codeberg.org/aryak/mozhi/utils"
 	"github.com/gofiber/fiber/v2"
 )

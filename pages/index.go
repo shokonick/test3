@@ -3,18 +3,48 @@ package pages
 import (
 	"codeberg.org/aryak/libmozhi"
 	"github.com/gofiber/fiber/v2"
+	"os"
 )
 
+func envTrueNoExist(env string) bool {
+	if _, ok := os.LookupEnv(env); ok == false || os.Getenv(env) == "true" {
+		return true
+	}
+	return false
+}
+
+func engineList() map[string]string {
+	engines := map[string]string{"google":"Google", "deepl": "DeepL", "duckduckgo": "DuckDuckGo", "libre": "LibreTranslate", "mymemory": "MyMemory", "reverso": "Reverso", "watson": "Watson", "yandex": "Yandex"}
+	if envTrueNoExist("MOZHI_GOOGLE_ENABLED") == false {
+		delete(engines,"google")
+	} else if envTrueNoExist("MOZHI_DEEPL_ENABLED") == false {
+		delete(engines,"deepl")
+	} else if envTrueNoExist("MOZHI_DUCKDUCKGO_ENABLED") == false {
+		delete(engines,"duckduckgo")
+	} else if envTrueNoExist("MOZHI_LIBRETRANSLATE_ENABLED") == false || envTrueNoExist("MOZHI_LIBRETRANSLATE_URL") {
+		delete(engines,"libre")
+	} else if envTrueNoExist("MOZHI_MYMEMORY_ENABLED") == false {
+		delete(engines,"mymemory")
+	} else if envTrueNoExist("MOZHI_REVERSO_ENABLED") == false {
+		delete(engines,"reverso")
+	} else if envTrueNoExist("MOZHI_WATSON_ENABLED") == false {
+		delete(engines,"watson")
+	} else if envTrueNoExist("MOZHI_YANDEX_ENABLED") == false {
+		delete(engines,"yandex")
+	}
+	return engines
+} 
+
 func HandleIndex(c *fiber.Ctx) error {
-	engines := []string{"google", "deepl", "duckduckgo", "libretranslate", "mymemory", "reverso", "watson", "yandex"}
+	engines := engineList()
 	var engine string
 	var originalText string
 	if c.Query("engine") == "" {
 		engine = "google"
 	}
 	if c.Query("engine") != "" {
-		for _, name := range engines {
-			if c.Query("engine") == name {
+		for key, _ := range engines {
+			if c.Query("engine") == key {
 				engine = c.Query("engine")
 			}
 		}
