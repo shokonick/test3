@@ -83,6 +83,19 @@ func Serve(port string) {
 		return c.Next()
 	})
 
+	api := app.Group("/api")
+	api.Get("/translate", pages.HandleTranslate)
+	api.Get("/source_languages", pages.HandleSourceLanguages)
+	api.Get("/target_languages", pages.HandleTargetLanguages)
+	api.Get("/tts", pages.HandleTTS)
+	api.Get("/version", func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"fiberversion": fiber.Version,
+			"goversion":    runtime.Version(),
+		})
+	})
+	api.Get("/swagger/*", swagger.HandlerDefault) // default
+
 	app.Get("/", pages.HandleIndex)
 	app.Get("/about", pages.HandleAbout)
 	app.Get("/switchlanguages", func(c *fiber.Ctx) error {
@@ -96,19 +109,6 @@ func Serve(port string) {
 		MaxAge: 2592000,
 		Root:   http.FS(public.GetFiles()),
 	}))
-
-	api := app.Group("/api")
-	api.Get("/translate", pages.HandleTranslate)
-	api.Get("/source_languages", pages.HandleSourceLanguages)
-	api.Get("/target_languages", pages.HandleTargetLanguages)
-	api.Get("/tts", pages.HandleTTS)
-	api.Get("/version", func(c *fiber.Ctx) error {
-		return c.JSON(fiber.Map{
-			"fiberversion": fiber.Version,
-			"goversion":    runtime.Version(),
-		})
-	})
-	api.Get("/swagger/*", swagger.HandlerDefault) // default
 
 	val, ok := os.LookupEnv("MOZHI_PORT")
 	if !ok {

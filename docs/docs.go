@@ -29,9 +29,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "success",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.List"
+                            "$ref": "#/definitions/libmozhi.List"
                         }
                     }
                 }
@@ -51,9 +51,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "success",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.List"
+                            "$ref": "#/definitions/libmozhi.List"
                         }
                     }
                 }
@@ -95,9 +95,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "success",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.LangOut"
+                            "$ref": "#/definitions/libmozhi.LangOut"
                         }
                     }
                 }
@@ -134,7 +134,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "utils.LangOut": {
+        "libmozhi.LangOut": {
             "type": "object",
             "properties": {
                 "detected": {
@@ -154,7 +154,7 @@ const docTemplate = `{
                 }
             }
         },
-        "utils.List": {
+        "libmozhi.List": {
             "type": "object",
             "properties": {
                 "id": {

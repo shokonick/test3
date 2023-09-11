@@ -1,5 +1,5 @@
 definitions:
-  utils.LangOut:
+  libmozhi.LangOut:
     properties:
       detected:
         type: string
@@ -12,7 +12,7 @@ definitions:
       translated-text:
         type: string
     type: object
-  utils.List:
+  libmozhi.List:
     properties:
       id:
         type: string
@@ -32,9 +32,9 @@ paths:
         type: string
       responses:
         "200":
-          description: success
+          description: OK
           schema:
-            $ref: '#/definitions/utils.List'
+            $ref: '#/definitions/libmozhi.List'
       summary: Show list of available source languages for engine
   /api/target_languages:
     get:
@@ -46,9 +46,9 @@ paths:
         type: string
       responses:
         "200":
-          description: success
+          description: OK
           schema:
-            $ref: '#/definitions/utils.List'
+            $ref: '#/definitions/libmozhi.List'
       summary: Show list of available target languages for engine
   /api/translate:
     get:
@@ -76,9 +76,9 @@ paths:
         type: string
       responses:
         "200":
-          description: success
+          description: OK
           schema:
-            $ref: '#/definitions/utils.LangOut'
+            $ref: '#/definitions/libmozhi.LangOut'
       summary: Translate text
   /api/tts:
     get:
