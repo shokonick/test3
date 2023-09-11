@@ -86,12 +86,10 @@
 {{.Translation.OutputText}}</textarea
         >
         {{if .Translation.AutoDetect}}
-        <p>
           Detected Language: {{.Translation.AutoDetect}}{{end}} {{if .TtsTo}}
           <audio controls>
             <source type="audio/mpeg" src="{{ .TtsTo }}" />
           </audio>
-        </p>
         {{end}}
       </div>
     </div>
