@@ -2,9 +2,9 @@
 body {
   font-family: sans-serif;
   margin: 20px auto;
-  max-width: 1100px;
   line-height: 1.5em;
-  font-size: 1.1em;
+  max-width: 1000px;
+  font-size: 1rem;
   background-color: #222;
   color: #f8f9fa;
   padding: 0 10px;
@@ -64,6 +64,7 @@ textarea {
   background-color: #222;
   border-color: #9d9d9d;
   color: #f8f9fa;
+  margin-bottom: 20px
 }
 textarea:focus {
   border-color: #e5ebff;
@@ -85,6 +86,7 @@ select {
   box-shadow: 2px 2px 0px 0px rgba(245, 124, 0, 0.25);
   color: #b2b2b2;
   background-color: #2f2f2f;
+  width: 100%;
 }
 
 button {
@@ -133,10 +135,10 @@ button:hover {
 .custom-select {
   position: relative;
   display: inline-block;
+  margin: 5px 10px;
 }
 
 .selected-option {
-  display: block;
   padding: 7px;
   border: 1px solid #ccc;
   border-radius: 4px;
