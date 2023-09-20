@@ -34,14 +34,13 @@
       </div>
 
       <div class="switch_languages">
-        <button
-          id="switchbutton"
-          aria-label="Switch languages"
-          formaction="/switchlanguages?engine={{ .Engine }}"
-          type="submit"
-        >
-		<!-- https://icon-sets.iconify.design/ci/arrow-left-right/ -->
-		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 13l3 3m0 0l-3 3m3-3H5m3-5L5 8m0 0l3-3M5 8h14"/></svg>
+        <button id="switchbutton" aria-label="Switch languages" formaction="/switchlanguages?engine={{ .Engine }}"
+          type="submit">
+          <!-- https://icon-sets.iconify.design/ci/arrow-left-right/ -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m16 13l3 3m0 0l-3 3m3-3H5m3-5L5 8m0 0l3-3M5 8h14" />
+          </svg>
         </button>
       </div>
 
@@ -56,46 +55,46 @@
       </div>
     </div>
 
-    <div class="wrap">
-      <div class="item-wrapper">
-        <textarea
-          autofocus
-          class="item"
-          id="input"
-          name="text"
-          dir="auto"
-          placeholder="Enter Text Here"
-        >
-{{ .OriginalText }}</textarea
-        >
-        {{if .TtsFrom}}
-        <audio controls>
-          <source type="audio/mpeg" src="{{ .TtsFrom }}" />
-        </audio>
-        {{end}}
-      </div>
-
-      <div class="item-wrapper">
-        <textarea
-          id="output"
-          class="translation item"
-          dir="auto"
-          placeholder="Translation"
-          readonly
-        >
-{{.Translation.OutputText}}</textarea
-        >
-        {{if .Translation.AutoDetect}}
-          Detected Language: {{.Translation.AutoDetect}}{{end}} {{if .TtsTo}}
-          <audio controls>
-            <source type="audio/mpeg" src="{{ .TtsTo }}" />
-          </audio>
-        {{end}}
-      </div>
+    <div class="item-wrapper">
+	  Source Text:
+      <textarea autofocus class="item" id="input" name="text" dir="auto" placeholder="Enter Text Here">
+{{ .OriginalText }}</textarea>
+      {{if .TtsFrom}}
+      <audio controls>
+        <source type="audio/mpeg" src="{{ .TtsFrom }}" />
+      </audio>
+      {{end}}
     </div>
-    <button style="display: block; margin: 0 auto" type="submit">
-      Translate!
-    </button>
+
+    {{ if .TranslateAll }}
+    {{range $key, $value := .TranslateAll}}
+    <div class="item-wrapper">
+      Engine: {{.Engine}}
+      <textarea class="translation item" dir="auto" placeholder="Translation" readonly>
+{{.OutputText}}</textarea>
+      {{if .AutoDetect}}
+      Detected Language: {{.AutoDetect}}{{end}} {{if $.TtsTo}}
+      <audio controls>
+        <source type="audio/mpeg" src="{{ $.TtsTo }}" />
+      </audio>
+      {{end}}
+    </div>
+    {{end}}
+    {{ else }} {{if .TranslationExists}}
+    <div class="item-wrapper">
+      <textarea class="translation item" dir="auto" placeholder="Translation" readonly>
+{{.Translation.OutputText}}</textarea>
+      {{if .Translation.AutoDetect}}
+      Detected Language: {{.Translation.AutoDetect}}{{end}} {{if .TtsTo}}
+      <audio controls>
+        <source type="audio/mpeg" src="{{ .TtsTo }}" />
+      </audio>
+      {{end}}
+      {{end}}
+      {{end}}
+      <button class="wrap" type="submit">
+        Translate!
+      </button>
   </form>
   <script>
     // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
@@ -107,7 +106,7 @@
           document.getElementById("translation-form").submit();
         }
       });
-	// This code makes the select language menu searchable if js is enabled
+    // This code makes the select language menu searchable if js is enabled
     var options = { searchable: true };
     NiceSelect.bind(document.getElementById("targetLanguage"), options);
     NiceSelect.bind(document.getElementById("sourceLanguage"), options);

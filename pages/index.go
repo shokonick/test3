@@ -14,7 +14,7 @@ func envTrueNoExist(env string) bool {
 }
 
 func engineList() map[string]string {
-	engines := map[string]string{"google":"Google", "deepl": "DeepL", "duckduckgo": "DuckDuckGo", "libre": "LibreTranslate", "mymemory": "MyMemory", "reverso": "Reverso", "watson": "Watson", "yandex": "Yandex"}
+	engines := map[string]string{"all":"All Engines", "google":"Google", "deepl": "DeepL", "duckduckgo": "DuckDuckGo", "libre": "LibreTranslate", "mymemory": "MyMemory", "reverso": "Reverso", "watson": "Watson", "yandex": "Yandex"}
 	if envTrueNoExist("MOZHI_GOOGLE_ENABLED") == false {
 		delete(engines,"google")
 	} else if envTrueNoExist("MOZHI_DEEPL_ENABLED") == false {
@@ -35,6 +35,38 @@ func engineList() map[string]string {
 	return engines
 } 
 
+
+// DeduplicateLists deduplicates a slice of List based on the Id field
+func deDuplicateLists(input []libmozhi.List) []libmozhi.List {
+	// Create a map to store unique Ids
+	uniqueIds := make(map[string]struct{})
+	result := []libmozhi.List{}
+
+	// Iterate over the input slice
+	for _, item := range input {
+		// Check if the Id is unique
+		if _, found := uniqueIds[item.Id]; !found {
+			// Add the Id to the map and append the List to the result slice
+			uniqueIds[item.Id] = struct{}{}
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func langListMerge(engines map[string]string) ([]libmozhi.List, []libmozhi.List) {
+	sl := []libmozhi.List{}
+	tl := []libmozhi.List{}
+	for key, _ := range engines {
+		temp, _ := libmozhi.LangList(key, "sl")
+		temp2, _ := libmozhi.LangList(key, "tl")
+		sl = append(sl, temp...)
+		tl = append(tl, temp2...)
+	}
+	return deDuplicateLists(sl), deDuplicateLists(tl)
+}
+
 func HandleIndex(c *fiber.Ctx) error {
 	engines := engineList()
 	var engine string
@@ -53,23 +85,33 @@ func HandleIndex(c *fiber.Ctx) error {
 		}
 	}
 
-	sourceLanguages, err1 := libmozhi.LangList(engine, "sl")
-	targetLanguages, err2 := libmozhi.LangList(engine, "tl")
-	if err1 != nil || err2 != nil {
-		return fiber.NewError(fiber.StatusInternalServerError, err1.Error()+err2.Error())
+	var sourceLanguages []libmozhi.List
+	var targetLanguages []libmozhi.List
+	if engine == "all" {
+		sourceLanguages, targetLanguages = langListMerge(engines)
+	} else {
+		sourceLanguages, _ = libmozhi.LangList(engine, "sl")
+		targetLanguages, _ = libmozhi.LangList(engine, "tl")
 	}
 
 	originalText = c.Query("text")
 	to := c.Query("to")
 	from := c.Query("from")
 	var translation libmozhi.LangOut
+	var translationExists bool
+	var transall []libmozhi.LangOut
 	var tlerr error
 	var ttsFrom string
 	var ttsTo string
 	if engine != "" && originalText != "" && from != "" && to != "" {
-		translation, tlerr = libmozhi.Translate(engine, to, from, originalText)
-		if tlerr != nil {
-			return fiber.NewError(fiber.StatusInternalServerError, tlerr.Error())
+		if engine == "all" {
+			transall = libmozhi.TranslateAll(to, from, originalText)
+		} else {
+			translation, tlerr = libmozhi.Translate(engine, to, from, originalText)
+			if tlerr != nil {
+				return fiber.NewError(fiber.StatusInternalServerError, tlerr.Error())
+			}
+			translationExists = true
 		}
 		if engine == "google" || engine == "reverso" {
 			if from == "auto" {
@@ -80,6 +122,8 @@ func HandleIndex(c *fiber.Ctx) error {
 			}
 			ttsTo = "/api/tts?lang=" + to + "&engine=" + engine + "&text=" + translation.OutputText
 		}
+	} else {
+		translationExists = false
 	}
 	return c.Render("index", fiber.Map{
 		"Engine":          engine,
@@ -88,6 +132,8 @@ func HandleIndex(c *fiber.Ctx) error {
 		"TargetLanguages": targetLanguages,
 		"OriginalText":    originalText,
 		"Translation":     translation,
+		"TranslationExists":     translationExists,
+		"TranslateAll":    transall,
 		"From":            from,
 		"To":              to,
 		"TtsFrom":         ttsFrom,
