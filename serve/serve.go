@@ -78,7 +78,7 @@ func Serve(port string) {
 		c.Set("X-XSS-Protection", "1; mode=block")
 		c.Set("X-Content-Type-Options", "nosniff")
 		c.Set("Referrer-Policy", "no-referrer")
-		c.Set("Content-Security-Policy", "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; script-src 'self'; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; connect-src 'self';")
+		c.Set("Content-Security-Policy", "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; script-src 'self' 'unsafe-inline'; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; connect-src 'self';")
 		c.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
 		return c.Next()
 	})
