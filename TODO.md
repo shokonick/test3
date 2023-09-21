@@ -1,15 +1,9 @@
 # TODO
-- Support disabling engines with Web interface
-- Make LibreTranslate work with web interface
-- Write an about page for web
 - Make detectlanguage swap the text as well
 - Interactive/Step-by-step CLI
 - Ability for user to choose engines they want to use
-- Proper Error handling for requests.go
-- Tell which language Detect Language chose -- Only support for deepl and google is pending
 - Finish simplytranslate-py compatible API for translations
 - Alternative words
 - Dictionary
-- Use the TranslateServerWebui API instead of scraping Google Translate Legacy 
 - ICIBA
 - Add speech to text with Vosk perhaps
