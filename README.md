@@ -66,6 +66,7 @@ These envvars turn off/on engines. By default all of them are enabled.
 | Link | Cloudflare | Country | ISP | 
 | -------- | ---------- | ----------- | ----- |
 | [mozhi.aryak.me](https://mozhi.aryak.me) | No | India | Airtel |
+| [translate.bus-hit.me](https://translate.bus-hit.me) | No | Canada | Oracle |
 
 ## Features
 - An all mode where the responses of all supported engines will be shown.
