@@ -9,7 +9,7 @@ COPY . .
 ENV GOPRIVATE=codeberg.org/aryak/libmozhi
 RUN go mod download
 RUN go run github.com/swaggo/swag/cmd/swag@latest init --parseDependency
-RUN GOOS=linux GOARCH=$TARGETARCH go build -o /src/mozhi
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -o /src/mozhi
 
 FROM alpine:3.16 as bin
 

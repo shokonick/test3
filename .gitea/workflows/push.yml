@@ -25,6 +25,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: codeberg.org/aryak/mozhi:latest
+          platforms: linux/amd64, linux/arm64
   build_artifact:
     runs-on: ubuntu-latest
     name: Build and publish artifacts
