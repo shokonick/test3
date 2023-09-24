@@ -5,7 +5,7 @@ go 1.21.0
 replace github.com/OwO-Network/gdeeplx => github.com/gi-yt/gdeeplx v0.0.0-20230817133036-0eb71706cd51
 
 require (
-	codeberg.org/aryak/libmozhi v0.0.0-20230920102302-eae522fadce2
+	codeberg.org/aryak/libmozhi v0.0.0-20230924060300-0f597921ab2d
 	github.com/gofiber/fiber/v2 v2.49.2
 	github.com/gofiber/swagger v0.1.13
 	github.com/gofiber/template v1.8.0
@@ -44,7 +44,7 @@ require (
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/swaggo/files/v2 v2.0.0 // indirect
-	github.com/tidwall/gjson v1.16.0 // indirect
+	github.com/tidwall/gjson v1.17.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
