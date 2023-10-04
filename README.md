@@ -86,3 +86,4 @@ Mozhi is the word in Tamil for language. Simple as that :P
 - [translatepy](https://github.com/Animenosekai/translate): giving me the format of request for yandex engine
 - [SimplyTranslate](https://codeberg.org/simpleweb/simplytranslate): Inspiration and base code for the webui
 - [Rimgo](https://codeberg.org/rimgo/rimgo): Code for embedding html in binary
+- [Bnyro](https://me.chatoyer.de): Parallelization of all engines
