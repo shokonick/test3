@@ -1,9 +1,11 @@
 package pages
 
 import (
+	"os"
+	"slices"
+
 	"codeberg.org/aryak/libmozhi"
 	"github.com/gofiber/fiber/v2"
-	"os"
 )
 
 func envTrueNoExist(env string) bool {
@@ -14,27 +16,26 @@ func envTrueNoExist(env string) bool {
 }
 
 func engineList() map[string]string {
-	engines := map[string]string{"all":"All Engines", "google":"Google", "deepl": "DeepL", "duckduckgo": "DuckDuckGo", "libre": "LibreTranslate", "mymemory": "MyMemory", "reverso": "Reverso", "watson": "Watson", "yandex": "Yandex"}
+	engines := map[string]string{"all": "All Engines", "google": "Google", "deepl": "DeepL", "duckduckgo": "DuckDuckGo", "libre": "LibreTranslate", "mymemory": "MyMemory", "reverso": "Reverso", "watson": "Watson", "yandex": "Yandex"}
 	if envTrueNoExist("MOZHI_GOOGLE_ENABLED") == false {
-		delete(engines,"google")
+		delete(engines, "google")
 	} else if envTrueNoExist("MOZHI_DEEPL_ENABLED") == false {
-		delete(engines,"deepl")
+		delete(engines, "deepl")
 	} else if envTrueNoExist("MOZHI_DUCKDUCKGO_ENABLED") == false {
-		delete(engines,"duckduckgo")
+		delete(engines, "duckduckgo")
 	} else if envTrueNoExist("MOZHI_LIBRETRANSLATE_ENABLED") == false || envTrueNoExist("MOZHI_LIBRETRANSLATE_URL") {
-		delete(engines,"libre")
+		delete(engines, "libre")
 	} else if envTrueNoExist("MOZHI_MYMEMORY_ENABLED") == false {
-		delete(engines,"mymemory")
+		delete(engines, "mymemory")
 	} else if envTrueNoExist("MOZHI_REVERSO_ENABLED") == false {
-		delete(engines,"reverso")
+		delete(engines, "reverso")
 	} else if envTrueNoExist("MOZHI_WATSON_ENABLED") == false {
-		delete(engines,"watson")
+		delete(engines, "watson")
 	} else if envTrueNoExist("MOZHI_YANDEX_ENABLED") == false {
-		delete(engines,"yandex")
+		delete(engines, "yandex")
 	}
 	return engines
-} 
-
+}
 
 // DeduplicateLists deduplicates a slice of List based on the Id field
 func deDuplicateLists(input []libmozhi.List) []libmozhi.List {
@@ -67,22 +68,24 @@ func langListMerge(engines map[string]string) ([]libmozhi.List, []libmozhi.List)
 	return deDuplicateLists(sl), deDuplicateLists(tl)
 }
 
+func getQueryOrFormValue(c *fiber.Ctx, key string) string {
+	if c.Method() == "POST" {
+		return c.FormValue(key)
+	} else {
+		return c.Query(key)
+	}
+}
+
 func HandleIndex(c *fiber.Ctx) error {
 	engines := engineList()
-	var engine string
-	var originalText string
-	if c.Query("engine") == "" {
-		engine = "google"
+	var enginesAsArray []string
+	for engine := range engines {
+		enginesAsArray = append(enginesAsArray, engine)
 	}
-	if c.Query("engine") != "" {
-		for key, _ := range engines {
-			if c.Query("engine") == key {
-				engine = c.Query("engine")
-			}
-		}
-		if engine == "" {
-			engine = "google"
-		}
+
+	var engine = getQueryOrFormValue(c, "engine")
+	if engine == "" || !slices.Contains(enginesAsArray, engine) {
+		engine = "google"
 	}
 
 	var sourceLanguages []libmozhi.List
@@ -94,9 +97,10 @@ func HandleIndex(c *fiber.Ctx) error {
 		targetLanguages, _ = libmozhi.LangList(engine, "tl")
 	}
 
-	originalText = c.Query("text")
-	to := c.Query("to")
-	from := c.Query("from")
+	originalText := getQueryOrFormValue(c, "text")
+	to := getQueryOrFormValue(c, "to")
+	from := getQueryOrFormValue(c, "from")
+
 	var translation libmozhi.LangOut
 	var translationExists bool
 	var transall []libmozhi.LangOut
@@ -126,18 +130,18 @@ func HandleIndex(c *fiber.Ctx) error {
 		translationExists = false
 	}
 	return c.Render("index", fiber.Map{
-		"Engine":          engine,
-		"enginesNames":    engines,
-		"SourceLanguages": sourceLanguages,
-		"TargetLanguages": targetLanguages,
-		"OriginalText":    originalText,
-		"Translation":     translation,
-		"TranslationExists":     translationExists,
-		"TranslateAll":    transall,
-		"From":            from,
-		"To":              to,
-		"TtsFrom":         ttsFrom,
-		"TtsTo":           ttsTo,
-		"defaultLang":     "en",
+		"Engine":            engine,
+		"enginesNames":      engines,
+		"SourceLanguages":   sourceLanguages,
+		"TargetLanguages":   targetLanguages,
+		"OriginalText":      originalText,
+		"Translation":       translation,
+		"TranslationExists": translationExists,
+		"TranslateAll":      transall,
+		"From":              from,
+		"To":                to,
+		"TtsFrom":           ttsFrom,
+		"TtsTo":             ttsTo,
+		"defaultLang":       "en",
 	})
 }
