@@ -14,8 +14,8 @@
   </div>
 
   <br /><br />
-  <form action="/" method="GET" id="translation-form">
-    <!-- This hidden input is so that the engine gets sent in the GET request even though its not declared here -->
+  <form action="/" method="POST" id="translation-form">
+    <!-- This hidden input is so that the engine gets sent in the request even though its not declared here -->
     <input name="engine" value="{{.Engine}}" type="hidden" />
 
     <div class="wrap languages">
