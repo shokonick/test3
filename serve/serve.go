@@ -84,8 +84,7 @@ func Serve(port string) {
 	})
 
 	api := app.Group("/api")
-	api.Get("/translate", pages.HandleTranslate)
-	api.Post("/translate", pages.HandleTranslate)
+	api.All("/translate", pages.HandleTranslate)
 	api.Get("/source_languages", pages.HandleSourceLanguages)
 	api.Get("/target_languages", pages.HandleTargetLanguages)
 	api.Get("/tts", pages.HandleTTS)
@@ -97,8 +96,7 @@ func Serve(port string) {
 	})
 	api.Get("/swagger/*", swagger.HandlerDefault) // default
 
-	app.Get("/", pages.HandleIndex)
-	app.Post("/", pages.HandleIndex)
+	app.All("/", pages.HandleIndex)
 	app.Get("/about", pages.HandleAbout)
 	app.Get("/switchlanguages", func(c *fiber.Ctx) error {
 		engine := c.Query("engine")
