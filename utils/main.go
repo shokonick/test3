@@ -1,6 +1,17 @@
 package utils
 
-import "regexp"
+import (
+	"regexp"
+	"github.com/gofiber/fiber/v2"
+)
+
+func GetQueryOrFormValue(c *fiber.Ctx, key string) string {
+	if c.Method() == "POST" {
+		return c.FormValue(key)
+	} else {
+		return c.Query(key)
+	}
+}
 
 func Sanitize(str string, strip string) string {
 	nonAlphanumericRegex := regexp.MustCompile(`[^a-zA-Z]+`)

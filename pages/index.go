@@ -5,6 +5,7 @@ import (
 	"slices"
 
 	"codeberg.org/aryak/libmozhi"
+	"codeberg.org/aryak/mozhi/utils"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -68,14 +69,6 @@ func langListMerge(engines map[string]string) ([]libmozhi.List, []libmozhi.List)
 	return deDuplicateLists(sl), deDuplicateLists(tl)
 }
 
-func getQueryOrFormValue(c *fiber.Ctx, key string) string {
-	if c.Method() == "POST" {
-		return c.FormValue(key)
-	} else {
-		return c.Query(key)
-	}
-}
-
 func HandleIndex(c *fiber.Ctx) error {
 	engines := engineList()
 	var enginesAsArray []string
@@ -83,7 +76,7 @@ func HandleIndex(c *fiber.Ctx) error {
 		enginesAsArray = append(enginesAsArray, engine)
 	}
 
-	var engine = getQueryOrFormValue(c, "engine")
+	var engine = utils.GetQueryOrFormValue(c, "engine")
 	if engine == "" || !slices.Contains(enginesAsArray, engine) {
 		engine = "google"
 	}
@@ -97,9 +90,9 @@ func HandleIndex(c *fiber.Ctx) error {
 		targetLanguages, _ = libmozhi.LangList(engine, "tl")
 	}
 
-	originalText := getQueryOrFormValue(c, "text")
-	to := getQueryOrFormValue(c, "to")
-	from := getQueryOrFormValue(c, "from")
+	originalText := utils.GetQueryOrFormValue(c, "text")
+	to := utils.GetQueryOrFormValue(c, "to")
+	from := utils.GetQueryOrFormValue(c, "from")
 
 	var translation libmozhi.LangOut
 	var translationExists bool

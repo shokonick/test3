@@ -11,6 +11,7 @@ import (
 	"codeberg.org/aryak/mozhi/pages"
 	"codeberg.org/aryak/mozhi/public"
 	"codeberg.org/aryak/mozhi/views"
+	"codeberg.org/aryak/mozhi/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
@@ -97,14 +98,14 @@ func Serve(port string) {
 	api.Get("/swagger/*", swagger.HandlerDefault) // default
 
 	app.All("/", pages.HandleIndex)
-	app.Get("/about", pages.HandleAbout)
-	app.Get("/switchlanguages", func(c *fiber.Ctx) error {
-		engine := c.Query("engine")
-		from := c.Query("from")
-		to := c.Query("to")
-		text := c.Query("text")
+	app.All("/switchlanguages", func(c *fiber.Ctx) error {
+		engine := utils.Sanitize(utils.GetQueryOrFormValue(c, "engine"), "alpha")
+		from := utils.Sanitize(utils.GetQueryOrFormValue(c, "from"), "alpha")
+		to := utils.Sanitize(utils.GetQueryOrFormValue(c, "to"), "alpha")
+		text := utils.Sanitize(utils.GetQueryOrFormValue(c, "text"), "alpha")
 		return c.Redirect("/?engine="+engine+"&from="+to+"&to="+from+"&text="+text+"&redirected=true", 301)
 	})
+	app.Get("/about", pages.HandleAbout)
 	app.Use("/", filesystem.New(filesystem.Config{
 		MaxAge: 2592000,
 		Root:   http.FS(public.GetFiles()),

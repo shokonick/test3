@@ -75,10 +75,10 @@ func HandleTTS(c *fiber.Ctx) error {
 //	@Success		200		{object}	libmozhi.LangOut
 //	@Router			/api/translate [get]
 func HandleTranslate(c *fiber.Ctx) error {
-	engine := utils.Sanitize(getQueryOrFormValue(c, "engine"), "alpha")
-	from := utils.Sanitize(getQueryOrFormValue(c, "from"), "alpha")
-	to := utils.Sanitize(getQueryOrFormValue(c, "to"), "alpha")
-	text := getQueryOrFormValue(c, "text")
+	engine := utils.Sanitize(utils.GetQueryOrFormValue(c, "engine"), "alpha")
+	from := utils.Sanitize(utils.GetQueryOrFormValue(c, "from"), "alpha")
+	to := utils.Sanitize(utils.GetQueryOrFormValue(c, "to"), "alpha")
+	text := utils.GetQueryOrFormValue(c, "text")
 	if engine == "" || from == "" || to == "" || text == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "from, to, engine, text are required query strings.")
 	}
