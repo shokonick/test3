@@ -70,7 +70,7 @@
     {{range $key, $value := .TranslateAll}}
     <div class="item-wrapper">
       Engine: {{.Engine}}
-      <textarea class="translation item" dir="auto" placeholder="Translation" readonly>
+      <textarea class="translation item" dir="auto" placeholder="Translation" id="output" readonly>
 {{.OutputText}}</textarea>
       {{if .AutoDetect}}
       Detected Language: {{.AutoDetect}}{{end}} {{if $.TtsTo}}
@@ -82,7 +82,7 @@
     {{end}}
     {{ else }} {{if .TranslationExists}}
     <div class="item-wrapper">
-      <textarea class="translation item" dir="auto" placeholder="Translation" readonly>
+      <textarea class="translation item" dir="auto" placeholder="Translation" id="output" readonly>
 {{.Translation.OutputText}}</textarea>
       {{if .Translation.AutoDetect}}
       Detected Language: {{.Translation.AutoDetect}}{{end}} {{if .TtsTo}}
@@ -94,6 +94,9 @@
       {{end}}
       <button class="wrap" type="submit">
         Translate!
+      </button>
+      <button class="wrap" type="button" onclick="copyToClipboard()">
+        Copy
       </button>
 	  {{ if and .Engine .From .To .OriginalText }}<p><a href="/?engine={{.Engine}}&from={{.From}}&to={{.To}}&text={{.OriginalText}}">Copy translation link</a></p>{{end}}
   </form>
@@ -111,6 +114,13 @@
     var options = { searchable: true };
     NiceSelect.bind(document.getElementById("targetLanguage"), options);
     NiceSelect.bind(document.getElementById("sourceLanguage"), options);
+    // This function allows to copy the translated text to the clipboard
+    function copyToClipboard() {
+      var copyText = document.getElementById("output");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); // This is for mobile devices.
+      document.execCommand("copy");
+    }
   </script>
 </main>
 {{ template "footer" .}}
