@@ -18,7 +18,7 @@
     <!-- This hidden input is so that the engine gets sent in the request even though its not declared here -->
     <input name="engine" value="{{.Engine}}" type="hidden" />
 
-    <div class="wrap languages">
+    <div class="wrap languages" style="display:flex; justify-content:space-around; align-items:center;">
       <div class="language">
         <select name="from" aria-label="Source language" id="sourceLanguage">
           {{range $key, $value := .SourceLanguages}} {{if $.From}}
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="item-wrapper">
+    <div class="item-wrapper" style="display:flex;flex-direction: column;justify-content: center;text-align: center;margin: auto;">
 	  Source Text:
       <textarea autofocus class="item" id="input" name="text" dir="auto" placeholder="Enter Text Here">
 {{ .OriginalText }}</textarea>
@@ -68,7 +68,7 @@
 
     {{ if .TranslateAll }}
     {{range $key, $value := .TranslateAll}}
-    <div class="item-wrapper">
+    <div class="item-wrapper" style="display:flex;flex-direction: column;justify-content: center;text-align: center;margin: auto;">
       Engine: {{.Engine}}
       <textarea class="translation item" dir="auto" placeholder="Translation" id="output" readonly>
 {{.OutputText}}</textarea>
@@ -92,13 +92,21 @@
       {{end}}
       {{end}}
       {{end}}
-      <button class="wrap" type="submit">
-        Translate!
-      </button>
-      <button class="wrap" type="button" onclick="copyToClipboard()">
-        Copy
-      </button>
-	  {{ if and .Engine .From .To .OriginalText }}<p><a href="/?engine={{.Engine}}&from={{.From}}&to={{.To}}&text={{.OriginalText}}">Copy translation link</a></p>{{end}}
+      <div style="display:flex; justify-content:space-around; align-items:center;">
+       {{if .TranslationExists}} 
+       <button class="wrap" type="button" onclick="copyToClipboard()">
+         Copy the translation
+       </button>
+       {{end}}
+	     {{ if and .Engine .From .To .OriginalText }}<p><a class="button" style="color:#010000; text-decoration: none;" href="/?engine={{.Engine}}&from={{.From}}&to={{.To}}&text={{.OriginalText}}">Copy translation link</a></p>{{end}}
+       {{if .TranslationExists}}
+       <button class="wrap" type="submit">
+       {{else}}
+       <button class="wrap" style="margin-left:auto; position:relative; left:-10%;margin-top: 1%;" type="submit">
+       {{end}}
+         Translate!
+       </button>
+      </div> 
   </form>
   <script>
     // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
