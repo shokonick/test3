@@ -81,7 +81,7 @@
     </div>
     {{end}}
     {{ else }} {{if .TranslationExists}}
-    <div class="item-wrapper">
+    <div class="item-wrapper" style="display:flex;flex-direction: column;justify-content: center;text-align: center;margin: auto;">
       <textarea class="translation item" dir="auto" placeholder="Translation" id="output" readonly>
 {{.Translation.OutputText}}</textarea>
       {{if .Translation.AutoDetect}}
