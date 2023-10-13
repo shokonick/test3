@@ -31,7 +31,7 @@ footer p {
 }
 
 a {
-  color: #F57C00;
+  color: #f57c00;
   text-decoration: none;
 }
 a:hover {
@@ -79,7 +79,7 @@ select {
   border-bottom: none;
   border-top: none;
   border-radius: 4px;
-  border-left: 2px solid #F57C00;
+  border-left: 2px solid #f57c00;
   /* Accent shadow */
   box-shadow: 2px 2px 0px 0px rgba(245, 124, 0, 0.25);
   color: #b2b2b2;
@@ -89,14 +89,32 @@ select {
 
 button {
   display: flex;
+  font-size: 17px;
   padding: 4px 8px;
   justify-content: flex-end;
   gap: 2px;
   border: none;
   border-radius: 4px;
-  background: #F57C00;
+  background: #f57c00;
 }
 button:hover {
+  box-shadow: 5px 5px 0px 0px rgba(245, 124, 0, 0.25);
+  cursor: pointer;
+}
+
+/* While we're at it, fake button css style for the url.*/
+
+.button {
+  display: flex;
+  font-size: 17px;
+  padding: 4px 8px;
+  justify-content: flex-end;
+  gap: 2px;
+  border: none;
+  border-radius: 4px;
+  background: #f57c00;
+}
+.button:hover {
   box-shadow: 5px 5px 0px 0px rgba(245, 124, 0, 0.25);
   cursor: pointer;
 }
@@ -168,11 +186,29 @@ button:hover {
 }
 
 /* Javascript searchable select used in source/target language */
-.nice-select, .nice-select-dropdown, .nice-select-search {
+.nice-select,
+.nice-select-dropdown,
+.nice-select-search {
   border-right: none;
   border-bottom: none;
   border-top: none;
   border-radius: 4px;
-  border-left: 2px solid #F57C00;
+  border-left: 2px solid #f57c00;
   box-shadow: 2px 2px 0px 0px rgba(245, 124, 0, 0.25);
+}
+.center-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 35%;
+  margin: auto;
+  margin-bottom: 1%;
+}
+
+.center-area2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
 }
