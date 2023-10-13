@@ -18,7 +18,7 @@
     <!-- This hidden input is so that the engine gets sent in the request even though its not declared here -->
     <input name="engine" value="{{.Engine}}" type="hidden" />
 
-    <div class="wrap languages" style="display:flex; justify-content:space-around; align-items:center;">
+    <div class="wrap languages" style="display:flex; justify-content:space-around; align-items:center; max-width:35%;margin: auto;margin-bottom: 1%;">
       <div class="language">
         <select name="from" aria-label="Source language" id="sourceLanguage">
           {{range $key, $value := .SourceLanguages}} {{if $.From}}
