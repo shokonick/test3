@@ -18,7 +18,7 @@
     <!-- This hidden input is so that the engine gets sent in the request even though its not declared here -->
     <input name="engine" value="{{.Engine}}" type="hidden" />
 
-    <div class="wrap languages" style="display:flex; justify-content:space-around; align-items:center; max-width:35%;margin: auto;margin-bottom: 1%;">
+    <div class="wrap languages center-area" >
       <div class="language">
         <select name="from" aria-label="Source language" id="sourceLanguage">
           {{range $key, $value := .SourceLanguages}} {{if $.From}}
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="item-wrapper" style="display:flex;flex-direction: column;justify-content: center;text-align: center;margin: auto;">
+    <div class="center-area2 item-wrapper"> 
 	  Source Text:
       <textarea autofocus class="item" id="input" name="text" dir="auto" placeholder="Enter Text Here">
 {{ .OriginalText }}</textarea>
@@ -68,7 +68,7 @@
 
     {{ if .TranslateAll }}
     {{range $key, $value := .TranslateAll}}
-    <div class="item-wrapper" style="display:flex;flex-direction: column;justify-content: center;text-align: center;margin: auto;">
+    <div class="item-wrapper center-area2">
       Engine: {{.Engine}}
       <textarea class="translation item" dir="auto" placeholder="Translation" id="output" readonly>
 {{.OutputText}}</textarea>
@@ -81,7 +81,7 @@
     </div>
     {{end}}
     {{ else }} {{if .TranslationExists}}
-    <div class="item-wrapper" style="display:flex;flex-direction: column;justify-content: center;text-align: center;margin: auto;">
+    <div class="item-wrapper center-area2">
       <textarea class="translation item" dir="auto" placeholder="Translation" id="output" readonly>
 {{.Translation.OutputText}}</textarea>
       {{if .Translation.AutoDetect}}
