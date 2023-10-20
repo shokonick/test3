@@ -122,6 +122,15 @@ func HandleIndex(c *fiber.Ctx) error {
 	} else {
 		translationExists = false
 	}
+
+	defaultLang := os.Getenv("MOZHI_DEFAULT_SOURCE_LANG")
+	defaultLangTarget := os.Getenv("MOZHI_DEFAULT_TARGET_LANG")
+	if defaultLang == "" {
+		defaultLang = "auto"
+	}
+	if defaultLangTarget == "" {
+		defaultLangTarget = "en"
+	}
 	return c.Render("index", fiber.Map{
 		"Engine":            engine,
 		"enginesNames":      engines,
@@ -135,6 +144,7 @@ func HandleIndex(c *fiber.Ctx) error {
 		"To":                to,
 		"TtsFrom":           ttsFrom,
 		"TtsTo":             ttsTo,
-		"defaultLang":       "en",
+		"defaultLang":       defaultLang,
+		"defaultLangTarget": defaultLangTarget,
 	})
 }

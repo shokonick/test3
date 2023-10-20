@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"regexp"
 	"github.com/gofiber/fiber/v2"
+	"regexp"
 )
 
 func GetQueryOrFormValue(c *fiber.Ctx, key string) string {

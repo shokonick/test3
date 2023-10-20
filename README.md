@@ -50,6 +50,8 @@ Features of Mozhi can be customized and toggled on/off using Environment Variabl
 
 - `MOZHI_PORT`: Port the webserver listens on (if hosting API)
 - `MOZHI_LIBRETRANSLATE_URL`: URL of Libretranslate instance (Example: `MOZHI_LIBRETRANSLATE_URL=https://lt.psf.lt`)
+- `MOZHI_DEFAULT_SOURCE_LANG`: Language to default to if no source language is set by user. Defaults to Auto-Detect (or first available language in engines which dont support it)
+- `MOZHI_DEFAULT_TARGET_LANG`: Language to default to if no target language is set by user. Defaults to English
 
 These envvars turn off/on engines. By default all of them are enabled.
 - `MOZHI_GOOGLE_ENABLED`
