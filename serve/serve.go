@@ -7,6 +7,7 @@ import (
 	"os"
 	"runtime"
 
+	"codeberg.org/aryak/libmozhi"
 	_ "codeberg.org/aryak/mozhi/docs"
 	"codeberg.org/aryak/mozhi/pages"
 	"codeberg.org/aryak/mozhi/public"
@@ -102,8 +103,17 @@ func Serve(port string) {
 		engine := utils.Sanitize(utils.GetQueryOrFormValue(c, "engine"), "alpha")
 		from := utils.Sanitize(utils.GetQueryOrFormValue(c, "from"), "alpha")
 		to := utils.Sanitize(utils.GetQueryOrFormValue(c, "to"), "alpha")
-		text := utils.Sanitize(utils.GetQueryOrFormValue(c, "text"), "alpha")
-		return c.Redirect("/?engine="+engine+"&from="+to+"&to="+from+"&text="+text+"&redirected=true", 301)
+		text := utils.GetQueryOrFormValue(c, "text")
+		var swapText string
+		if engine != "all" && text != "" {
+			translation, tlerr := libmozhi.Translate(engine, to, from, text)
+			if tlerr == nil {
+				swapText = translation.OutputText
+			} else {
+				swapText = text
+			}
+		}
+		return c.Redirect("/?engine="+engine+"&from="+to+"&to="+from+"&text="+swapText+"&redirected=true", 301)
 	})
 	app.Get("/about", pages.HandleAbout)
 	app.Use("/", filesystem.New(filesystem.Config{
