@@ -89,6 +89,7 @@ func Serve(port string) {
 	api.All("/translate", pages.HandleTranslate)
 	api.Get("/source_languages", pages.HandleSourceLanguages)
 	api.Get("/target_languages", pages.HandleTargetLanguages)
+	api.Get("/engines", pages.HandleEngines)
 	api.Get("/tts", pages.HandleTTS)
 	api.Get("/version", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{

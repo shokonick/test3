@@ -22,6 +22,17 @@ definitions:
 info:
   contact: {}
 paths:
+  /api/engines:
+    get:
+      description: Lists available Engines.
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: List engines
   /api/source_languages:
     get:
       parameters:

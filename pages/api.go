@@ -99,3 +99,18 @@ func HandleTranslate(c *fiber.Ctx) error {
 		return c.JSON(data)
 	}
 }
+
+// HandleEngines godoc
+//
+//	@Summary		List engines
+//	@Description	Lists available Engines.
+//	@Success		200		{object}	map[string]string
+//	@Router			/api/engines [get]
+func HandleEngines(c *fiber.Ctx) error {
+	engines := utils.EngineList()
+	serializedData := make(map[string]interface{}, len(engines))
+	for engineId, engineName := range engines {
+		serializedData[engineId] = engineName
+	}
+	return c.JSON(serializedData)
+}

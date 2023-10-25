@@ -15,6 +15,23 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/engines": {
+            "get": {
+                "description": "Lists available Engines.",
+                "summary": "List engines",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/source_languages": {
             "get": {
                 "summary": "Show list of available source languages for engine",

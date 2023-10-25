@@ -9,54 +9,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func envTrueNoExist(env string) bool {
-	if _, ok := os.LookupEnv(env); ok == false || os.Getenv(env) == "true" {
-		return true
-	}
-	return false
-}
-
-func engineList() map[string]string {
-	engines := map[string]string{"all": "All Engines", "google": "Google", "deepl": "DeepL", "duckduckgo": "DuckDuckGo", "libre": "LibreTranslate", "mymemory": "MyMemory", "reverso": "Reverso", "watson": "Watson", "yandex": "Yandex"}
-	if envTrueNoExist("MOZHI_GOOGLE_ENABLED") == false {
-		delete(engines, "google")
-	} else if envTrueNoExist("MOZHI_DEEPL_ENABLED") == false {
-		delete(engines, "deepl")
-	} else if envTrueNoExist("MOZHI_DUCKDUCKGO_ENABLED") == false {
-		delete(engines, "duckduckgo")
-	} else if envTrueNoExist("MOZHI_LIBRETRANSLATE_ENABLED") == false || envTrueNoExist("MOZHI_LIBRETRANSLATE_URL") {
-		delete(engines, "libre")
-	} else if envTrueNoExist("MOZHI_MYMEMORY_ENABLED") == false {
-		delete(engines, "mymemory")
-	} else if envTrueNoExist("MOZHI_REVERSO_ENABLED") == false {
-		delete(engines, "reverso")
-	} else if envTrueNoExist("MOZHI_WATSON_ENABLED") == false {
-		delete(engines, "watson")
-	} else if envTrueNoExist("MOZHI_YANDEX_ENABLED") == false {
-		delete(engines, "yandex")
-	}
-	return engines
-}
-
-// DeduplicateLists deduplicates a slice of List based on the Id field
-func deDuplicateLists(input []libmozhi.List) []libmozhi.List {
-	// Create a map to store unique Ids
-	uniqueIds := make(map[string]struct{})
-	result := []libmozhi.List{}
-
-	// Iterate over the input slice
-	for _, item := range input {
-		// Check if the Id is unique
-		if _, found := uniqueIds[item.Id]; !found {
-			// Add the Id to the map and append the List to the result slice
-			uniqueIds[item.Id] = struct{}{}
-			result = append(result, item)
-		}
-	}
-
-	return result
-}
-
 func langListMerge(engines map[string]string) ([]libmozhi.List, []libmozhi.List) {
 	sl := []libmozhi.List{}
 	tl := []libmozhi.List{}
@@ -66,11 +18,11 @@ func langListMerge(engines map[string]string) ([]libmozhi.List, []libmozhi.List)
 		sl = append(sl, temp...)
 		tl = append(tl, temp2...)
 	}
-	return deDuplicateLists(sl), deDuplicateLists(tl)
+	return utils.DeDuplicateLists(sl), utils.DeDuplicateLists(tl)
 }
 
 func HandleIndex(c *fiber.Ctx) error {
-	engines := engineList()
+	engines := utils.EngineList()
 	var enginesAsArray []string
 	for engine := range engines {
 		enginesAsArray = append(enginesAsArray, engine)
