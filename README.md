@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/assets/mozhi.svg" width="192" height="192" alt="Mozhi logo">
+  <img src="public/assets/mozhi.png" width="192" height="192" alt="Mozhi logo">
   <h1>Mozhi</h1>
 
   <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
